@@ -1,0 +1,10 @@
+{
+  "StartPosition" :
+  {
+    "X": 512.0,
+	"Y": 384.0
+  },
+  "Scale": 2.0,
+  "WalkSpeed": 256.0,
+  "JumpSpeed": 640.0
+}
