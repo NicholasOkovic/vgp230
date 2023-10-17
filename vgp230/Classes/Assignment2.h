@@ -14,7 +14,7 @@ public:
 
     virtual void update(float dt);
 
-    virtual void keyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+   // virtual void keyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
     // implement the "static create()" method manually
     CREATE_FUNC(Assignment2);
