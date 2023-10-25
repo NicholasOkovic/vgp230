@@ -1,179 +1,5 @@
 #include "Assignment2.h"
 
-//#include "KeyboardControllerComponent.h"
-
-
-//class VelocityComponent : public Component
-//{
-//public:
-//	static VelocityComponent* create(/*Vec2 s*/bool d, float m)
-//	{
-//		auto rotating = new VelocityComponent(/*s*/d, m);
-//		rotating->init();
-//		rotating->autorelease();
-//		return rotating;
-//	}
-//	virtual bool init() 
-//    { 
-//        _name = "VelocityComponent"; return true; 
-//
-//      /*  if (d == up)
-//        {
-//
-//        }*/
-//
-//    }
-//	VelocityComponent(/*Vec2 s*/bool d, float m) : _vel(s), _maxSpeed(m)
-//	{
-//	}
-//	virtual void update(float dt)
-//	{
-//		auto length = _vel.length();
-//		if (length > _maxSpeed)
-//		{
-//			_vel = Vec2((_vel.x / length) * _maxSpeed, (_vel.y / length) * _maxSpeed);
-//		}
-//		auto position = this->getOwner()->getPosition();
-//		this->getOwner()->setPosition(position + _vel * dt);
-//	}
-//	void operator+=(Vec2 const& v)
-//	{
-//		_vel += v;
-//	}
-//private:
-//	Vec2 _vel;
-//	float _maxSpeed;
-//};
-
-//void Assignment2::keyPressed(EventKeyboard::KeyCode keyCode, Event* event)
-//{
-//	switch (keycode)
-//	{
-//	case EventKeyboard::KeyCode::KEY_A:
-//		break;
-//	}
-//}
-
-class KeyboardControllerComponent : public Component
-{
-public:
-    typedef int KeyboardInputType;
-    static constexpr int WASD = 0;
-    static constexpr int ARROWS = 1;
-
-    static KeyboardControllerComponent* create(/*const KeyboardInputType& type*/)
-    {
-        auto controller = new KeyboardControllerComponent(/*type*/);
-        controller->init();
-        controller->autorelease();
-        return controller;
-    }
-
-    KeyboardControllerComponent(/*const KeyboardInputType& type*/)
-    {
-       /* if (type == WASD)
-        {*/
-            leftKeyCode = EventKeyboard::KeyCode::KEY_A;
-            rightKeyCode = EventKeyboard::KeyCode::KEY_D;
-            upKeyCode = EventKeyboard::KeyCode::KEY_W;
-            downKeyCode = EventKeyboard::KeyCode::KEY_S;
-        //}
-       /* else
-        {
-            leftKeyCode = EventKeyboard::KeyCode::KEY_LEFT_ARROW;
-            rightKeyCode = EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
-            upKeyCode = EventKeyboard::KeyCode::KEY_UP_ARROW;
-            downKeyCode = EventKeyboard::KeyCode::KEY_DOWN_ARROW;
-        }*/
-    }
-
-    virtual bool init()
-    {
-       
-        _name = "KeyboardControllerComponent";
-        return true;
-    }
-
-    void initInput()
-    {
-        
-        auto keyboardListener = EventListenerKeyboard::create();
-        keyboardListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event)
-            {
-                if (keyCode == leftKeyCode)
-                {
-                    left = true;
-                }
-                else if (keyCode == rightKeyCode)
-                {
-                    right = true;
-                }
-                else if (keyCode == upKeyCode)
-                {
-                    up = true;
-                }
-                else if (keyCode == downKeyCode)
-                {
-                    down = true;
-                }
-            };
-        keyboardListener->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event)
-            {
-                if (keyCode == leftKeyCode)
-                {
-                    left = false;
-                }
-                else if (keyCode == rightKeyCode)
-                {
-                    right = false;
-                }
-                else if (keyCode == upKeyCode)
-                {
-                    up = false;
-                }
-                else if (keyCode == downKeyCode)
-                {
-                    down = false;
-                }
-            };
-
-        auto scene = this->getOwner()->getScene();
-        auto dispatcher = Director::getInstance()->getEventDispatcher();
-
-        dispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, scene);
-    }
-
-    bool IsLeftPressed()
-    {
-        return left;
-    }
-
-    bool IsRightPressed()
-    {
-        return right;
-    }
-
-    bool IsUpPressed()
-    {
-        return up;
-    }
-
-    bool IsDownPressed()
-    {
-        return down;
-    }
-private:
-
-    EventKeyboard::KeyCode leftKeyCode;
-    EventKeyboard::KeyCode rightKeyCode;
-    EventKeyboard::KeyCode upKeyCode;
-    EventKeyboard::KeyCode downKeyCode;
-    bool left = false;
-    bool right = false;
-    bool up = false;
-    bool down = false;
-};
-
 
 Scene* Assignment2::createScene()
 {
@@ -183,37 +9,97 @@ Scene* Assignment2::createScene()
 
 
 bool Assignment2::init()
-{
-   
+{/*
+	auto bullet01 = Sprite::create("bullet1");			don't know how to do object pooling, ask next class
+	auto bullet02 = Sprite::create("bullet1");
+	auto bullet03 = Sprite::create("bullet1");
+	auto bullet04 = Sprite::create("bullet1");
+	auto bullet05 = Sprite::create("bullet1");
+	auto bullet06 = Sprite::create("bullet1");
+	auto bullet07 = Sprite::create("bullet1");
+	auto bullet08 = Sprite::create("bullet1");
+	auto bullet09 = Sprite::create("bullet1");
+	auto bullet10 = Sprite::create("bullet1");
+	auto bullet11 = Sprite::create("bullet1");
+	auto bullet12 = Sprite::create("bullet1");
+	auto bullet13 = Sprite::create("bullet1");
+	auto bullet14 = Sprite::create("bullet1");
+	auto bullet15 = Sprite::create("bullet1");
+	auto bullet16 = Sprite::create("bullet1");
+	auto bullet17 = Sprite::create("bullet1");
+	auto bullet18 = Sprite::create("bullet1");
+	auto bullet19 = Sprite::create("bullet1");
+	auto bullet20 = Sprite::create("bullet1");
+
+	for (int i = 0; i < sizeof(Bullets)/sizeof(int); i++)
+	{
+	}*/
+	//int arr[20] = { int a = 1 };
+	//Sprite Bullets[2] = { Sprite::create("bullet1") = auto bullet21 , auto bullet22 = Sprite::create("bullet1") };
+
+	//bullet01->setOpacity(100);
+
+	healthBarBase = Sprite::create("bar_empty.png");
+	this->addChild(healthBarBase, 3);
+
+	healthBarHP = Sprite::create("bar_red.png");
+	this->addChild(healthBarHP, 4);
+
+	ship = Sprite::create("fighter.png");
+	ship->setPosition(500, 50);
+	this->addChild(ship, 2);
+
+    keyboard = KeyboardControllerComponent::create(1);
+    ship->addComponent(keyboard);
 	
-
-	auto hero = Sprite::create("fighter.png");
-
-
-
-    auto keyboardControllerComponent = KeyboardControllerComponent::create();
-    hero->addComponent(keyboardControllerComponent);
-
-     
-
-   /* auto velocityComponent = VelocityComponent::create(Vec2(10, 2), 100.0f);
-	hero->addComponent(velocityComponent);*/
-
-	//auto keyboardListener = EventListenerKeyboard::create();
-	/*keyboardListener->onKeyPressed = CC_CALLBACK_2(Assignment2::keyPressed, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
-	auto keyboardControllerComponent = KeyboardControllerComponent::create(KeyboardInputType());
-	hero->addComponent(KeyboardControllerComponent);*/
-
-	hero->setPosition(500, 500);
-	this->addChild(hero, 0);
 	scheduleUpdate();
 	return true;
 };
 
 void Assignment2::update(float dt)
 {
+	if (FireTimer >= 0)
+	{
+		FireTimer = FireTimer - (1 * dt);
+	}
 
+	keyboard->initInput();
+
+	if (keyboard->IsRightPressed())
+	{
+		ship->setPosition((Vec2((ship->getPosition().x + (Velocity * dt)), (ship->getPosition().y))));
+	}
+	if (keyboard->IsLeftPressed())
+	{
+		ship->setPosition((Vec2((ship->getPosition().x + ((Velocity * dt)*-1)), (ship->getPosition().y))));
+	}
+	if (keyboard->IsDownPressed())
+	{
+		ship->setPosition((Vec2((ship->getPosition().x ), (ship->getPosition().y + ((Velocity * dt) * -1)))));
+	}
+	if (keyboard->IsUpPressed())
+	{
+		ship->setPosition((Vec2((ship->getPosition().x), (ship->getPosition().y + (Velocity * dt)))));
+	}
+	if (keyboard->IsFirePressed() && FireTimer == 0)
+	{
+		//(when object pool is created) create a for loop looking for an inactive bullet, when it finds one activate it	
+		bullet = Sprite::create("bullet1.png");
+		this->addChild(bullet, 1);
+		auto VelComponent = VelocityComponent::create(Vec2(0, BulletVelocity), BulletVelocity);
+		bullet->addComponent(VelComponent);
+		bullet->setPosition(Vec2(ship->getPositionX(), ship->getPositionY()));
+		
+		FireTimer = 20;
+	}
+
+	healthBarBase->setPosition(Vec2(ship->getPositionX(), ship->getPositionY() - HealthBarBaseOffset));
+	healthBarHP->setPosition(healthBarBase->getPosition() - HealthBarHPOffset);
+	healthBarHP->setAnchorPoint(Vec2(0, 0));
+	if (healthBarHP->getScaleX() >= 0)
+	{
+		healthBarHP->setScaleX(healthBarHP->getScaleX() - (Damage * 0.001f));
+	}
 };
 
 
