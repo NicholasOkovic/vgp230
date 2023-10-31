@@ -32,7 +32,9 @@ public:
     int Velocity = 150;
     int BulletVelocity = 500;
 
+    Sprite* ship2;
     Sprite* ship;
+
     Sprite* bullet;
     Sprite* healthBarBase;
     Sprite* healthBarHP;
@@ -41,7 +43,7 @@ public:
 
     int Damage = 1;
     KeyboardControllerComponent* keyboard;
-
+    VelocityComponent* VelComponent;
 
     DrawNode* drawNode = NULL;
     DrawNode* debug;
@@ -74,6 +76,8 @@ public:
 
     int BulletArraySize = 20;
 
+    Vec2 Bounds = (Vec2(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height));
+    Vec2 MinBounds = (Vec2(0, -50));
 
     Sprite* Meteor;
     int meteorHP = 100;

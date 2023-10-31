@@ -32,12 +32,11 @@ bool Assignment2::init()
 	Bullets[18] = bullet19 = Sprite::create("bullet1.png");
 	Bullets[19] = bullet20 = Sprite::create("bullet1.png");
 
-	
-
-
 	for (int i = 0; i < BulletArraySize-1; i++)
 	{
-		this->addChild(Bullets[i], 2);
+		this->addChild(Bullets[i], 1);
+		Bullets[i]->addComponent(CollisionComponent::createCircle((Bullets[i]->getContentSize().height) / 2));
+		Bullets[i]->addComponent(VelocityComponent::create(Vec2(0, BulletVelocity), BulletVelocity));
 		Bullets[i]->setVisible(false);
 	}
 
@@ -45,8 +44,10 @@ bool Assignment2::init()
 	ship->setPosition(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 10);
 	this->addChild(ship, 2);
 
+
 	keyboard = KeyboardControllerComponent::create(0);
 	ship->addComponent(keyboard);
+
 	ship->addComponent(CollisionComponent::createCircle((ship->getContentSize().height) / 3));
 
 	healthBarBase = Sprite::create("bar_empty.png");
@@ -58,37 +59,25 @@ bool Assignment2::init()
 	healthBarHP->setPosition(healthBarBase->getPosition() - HealthBarHPOffset);
 	this->addChild(healthBarHP, 4);
 
-	
-
-
-
 	debug = DrawNode::create(5);
 	this->addChild(debug, 5);
 
-	
-
 	Meteor = Sprite::create("meteor.png");
-
-
-
 
 	label = Label::create();
 	label->setScale(2);
 	label->setString("Press Enter to play");
 
 	label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2 ,Director::getInstance()->getVisibleSize().height / 2));
-	this->addChild(label, 0);
-
-
+	this->addChild(label, 5);
 	
-
-
 	scheduleUpdate();
 	return true;
 };
 
 void Assignment2::update(float dt)
 {
+	
 	keyboard->initInput();
 	if (gameState != running)
 	{
@@ -96,7 +85,7 @@ void Assignment2::update(float dt)
 		{
 			gameState = running;
 			label->setVisible(false);
-			Wave1;							//start wave 1
+			//Wave1;							//start wave 1
 		}
 	}
 	else
@@ -130,16 +119,21 @@ void Assignment2::update(float dt)
 		{
 			//(when object pool is created) create a for loop looking for an inactive bullet, when it finds one activate it	
 
-			
-
-
-
-			bullet = Sprite::create("bullet1.png");
+			for (int i = 0; i < BulletArraySize; i++)
+			{
+				if (Bullets[i]->isVisible() == false)		
+				{
+					Bullets[i]->setVisible(true);
+					Bullets[i]->setPosition(Vec2(ship->getPositionX(), ship->getPositionY()));
+					break;
+				}
+			}
+			/*bullet = Sprite::create("bullet1.png");
 			this->addChild(bullet, 1);
 			auto VelComponent = VelocityComponent::create(Vec2(0, BulletVelocity), BulletVelocity);
 			bullet->addComponent(VelComponent);
 			bullet->addComponent(CollisionComponent::createCircle((bullet->getContentSize().height) / 2));
-			bullet->setPosition(Vec2(ship->getPositionX(), ship->getPositionY()));
+			bullet->setPosition(Vec2(ship->getPositionX(), ship->getPositionY()));*/
 
 			FireTimer = FireCooldown;
 		}
@@ -147,6 +141,20 @@ void Assignment2::update(float dt)
 		{
 			debugDrawEnabled = !debugDrawEnabled;
 		}
+
+		//BULLETS OUT OF SCOPE
+
+		for (int i = 0; i < BulletArraySize-1; i++)		
+		{
+			if (Bullets[i]->isVisible())
+			{
+				if (Bullets[i]->getPosition().x > Bounds.x || Bullets[i]->getPosition().x < MinBounds.x || Bullets[i]->getPosition().y > Bounds.y|| Bullets[i]->getPosition().y < MinBounds.y)
+				{
+					Bullets[i]->setVisible(false);
+				}
+			}
+		}
+
 
 		//HEALTH BAR
 
@@ -228,9 +236,7 @@ void Assignment2::update(float dt)
 				}
 			}
 		}
-
 	}
-
 };
 
 bool Wave1()
