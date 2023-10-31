@@ -725,6 +725,7 @@ void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
 
             tmxMapInfo->setStoringCharacters(false);
             std::string currentString = tmxMapInfo->getCurrentString();
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 currentString.erase(std::remove(currentString.begin(), currentString.end(), '\r'), currentString.end());
 #endif

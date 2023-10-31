@@ -114,9 +114,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
     //auto scene = HelloWorld::createScene();
     //auto scene = Assignment1::createScene();
+
     auto scene = Assignment2::createScene();
     //auto scene = CollisionTestScene::create();
     //auto scene = MazeScene::create();
+
 
 
     // run
