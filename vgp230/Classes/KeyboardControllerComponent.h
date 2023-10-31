@@ -27,6 +27,7 @@ public:
             rightKeyCode = EventKeyboard::KeyCode::KEY_D;
             upKeyCode = EventKeyboard::KeyCode::KEY_W;
             downKeyCode = EventKeyboard::KeyCode::KEY_S;
+            fireKeyCode = EventKeyboard::KeyCode::KEY_ENTER;
         }
         else
         {
@@ -34,6 +35,7 @@ public:
             rightKeyCode = EventKeyboard::KeyCode::KEY_RIGHT_ARROW;
             upKeyCode = EventKeyboard::KeyCode::KEY_UP_ARROW;
             downKeyCode = EventKeyboard::KeyCode::KEY_DOWN_ARROW;
+            fireKeyCode = EventKeyboard::KeyCode::KEY_SPACE;
         }
     }
 
@@ -64,6 +66,14 @@ public:
                 {
                     down = true;
                 }
+                else if (keyCode == fireKeyCode)
+                {
+                    fire = true;
+                }
+                else if (keyCode == EventKeyboard::KeyCode::KEY_L)
+                {
+                    debug = true;
+                }
             };
         keyboardListener->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event)
             {
@@ -82,6 +92,10 @@ public:
                 else if (keyCode == downKeyCode)
                 {
                     down = false;
+                }
+                else if (keyCode == fireKeyCode)
+                {
+                    fire = false;
                 }
             };
 
@@ -110,13 +124,27 @@ public:
     {
         return down;
     }
+
+    bool IsFirePressed() 
+    {
+        return fire;
+    }
+
+    bool IsDebugPressed()
+    {
+        return debug;
+    }
+
 private:
     EventKeyboard::KeyCode leftKeyCode;
     EventKeyboard::KeyCode rightKeyCode;
     EventKeyboard::KeyCode upKeyCode;
     EventKeyboard::KeyCode downKeyCode;
+    EventKeyboard::KeyCode fireKeyCode;
     bool left = false;
     bool right = false;
     bool up = false;
     bool down = false;
+    bool fire = false;
+    bool debug = false;
 };
