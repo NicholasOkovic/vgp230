@@ -115,9 +115,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //auto scene = HelloWorld::createScene();
     //auto scene = Assignment1::createScene();
 
-    //auto scene = Assignment2::createScene();
+    auto scene = Assignment2::createScene();
     //auto scene = CollisionTestScene::create();
-    auto scene = MazeScene::create();
+    //auto scene = MazeScene::create();
 
 
 

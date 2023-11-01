@@ -23,6 +23,7 @@ public:
     }
     gameState = menu;
 
+    bool switchstate = true;
 
     //Sprite* Bullets[20];
 

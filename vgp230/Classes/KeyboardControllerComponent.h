@@ -72,7 +72,7 @@ public:
                 }
                 else if (keyCode == EventKeyboard::KeyCode::KEY_L)
                 {
-                    debug = true;
+                    debug = !debug;
                 }
             };
         keyboardListener->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event)
@@ -96,10 +96,6 @@ public:
                 else if (keyCode == fireKeyCode)
                 {
                     fire = false;
-                }
-                else if (keyCode == EventKeyboard::KeyCode::KEY_L)
-                {
-                    debug = false;
                 }
             };
 

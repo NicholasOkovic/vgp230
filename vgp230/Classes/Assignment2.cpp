@@ -126,9 +126,14 @@ void Assignment2::update(float dt)
 			}
 			FireTimer = FireCooldown;
 		}
+
 		if (keyboard->IsDebugPressed())
 		{
-			debugDrawEnabled = !debugDrawEnabled;		///glitchy debug is because of this
+			debugDrawEnabled = true;		
+		}
+		else if (!keyboard->IsDebugPressed())
+		{
+			debugDrawEnabled = false;
 		}
 
 		//BULLETS OUT OF SCOPE
@@ -192,6 +197,7 @@ void Assignment2::update(float dt)
 
 		if (debugDrawEnabled)
 		{
+		
 			for (auto it : this->getChildren())
 			{
 				auto collision = dynamic_cast<CollisionComponent*>(it->getComponent("CollisionComponent"));
@@ -223,6 +229,7 @@ void Assignment2::update(float dt)
 					}
 				}
 			}
+			//switchstate = !switchstate;
 		}
 	}
 };
