@@ -70,15 +70,15 @@ bool Assignment2::init()
 
 	label->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2 ,Director::getInstance()->getVisibleSize().height / 2));
 	this->addChild(label, 5);
-	
+
+	keyboard->initInput();
+
 	scheduleUpdate();
 	return true;
 };
 
 void Assignment2::update(float dt)
 {
-	
-	keyboard->initInput();
 	if (gameState != running)
 	{
 		if (keyboard->IsFirePressed())
@@ -90,14 +90,12 @@ void Assignment2::update(float dt)
 	}
 	else
 	{
-
 		if (FireTimer >= 0)
 		{
 			FireTimer = FireTimer - (1 * dt);
 		}
 
 		//CONTROLLER
-
 
 		if (keyboard->IsRightPressed())
 		{
@@ -117,8 +115,6 @@ void Assignment2::update(float dt)
 		}
 		if (keyboard->IsFirePressed() && FireTimer == 0)
 		{
-			//(when object pool is created) create a for loop looking for an inactive bullet, when it finds one activate it	
-
 			for (int i = 0; i < BulletArraySize; i++)
 			{
 				if (Bullets[i]->isVisible() == false)		
@@ -128,18 +124,11 @@ void Assignment2::update(float dt)
 					break;
 				}
 			}
-			/*bullet = Sprite::create("bullet1.png");
-			this->addChild(bullet, 1);
-			auto VelComponent = VelocityComponent::create(Vec2(0, BulletVelocity), BulletVelocity);
-			bullet->addComponent(VelComponent);
-			bullet->addComponent(CollisionComponent::createCircle((bullet->getContentSize().height) / 2));
-			bullet->setPosition(Vec2(ship->getPositionX(), ship->getPositionY()));*/
-
 			FireTimer = FireCooldown;
 		}
 		if (keyboard->IsDebugPressed())
 		{
-			debugDrawEnabled = !debugDrawEnabled;
+			debugDrawEnabled = !debugDrawEnabled;		///glitchy debug is because of this
 		}
 
 		//BULLETS OUT OF SCOPE
@@ -154,7 +143,6 @@ void Assignment2::update(float dt)
 				}
 			}
 		}
-
 
 		//HEALTH BAR
 

@@ -97,6 +97,10 @@ public:
                 {
                     fire = false;
                 }
+                else if (keyCode == EventKeyboard::KeyCode::KEY_L)
+                {
+                    debug = false;
+                }
             };
 
         auto scene = this->getOwner()->getScene();

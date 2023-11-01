@@ -45,7 +45,7 @@ public:
     KeyboardControllerComponent* keyboard;
     VelocityComponent* VelComponent;
 
-    DrawNode* drawNode = NULL;
+ 
     DrawNode* debug;
     bool debugDrawEnabled = false;
 
