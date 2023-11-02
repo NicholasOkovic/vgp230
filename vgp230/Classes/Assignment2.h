@@ -5,7 +5,10 @@
 #include "KeyboardControllerComponent.h"
 #include "VelocityComponent.h"
 #include "CollisionTestScene.h"
+#include "WaveComponent.h"
+
 USING_NS_CC;
+using namespace std;
 
 class Assignment2 : public Scene
 {
@@ -14,6 +17,8 @@ public:
 
     virtual bool init();
     virtual void update(float dt);
+
+    void Wave1(float dt);
 
     enum GameState
     {
@@ -32,6 +37,7 @@ public:
 
     int Velocity = 150;
     int BulletVelocity = 500;
+    int MeteorVelocity = -250;
 
     Sprite* ship2;
     Sprite* ship;
@@ -42,9 +48,8 @@ public:
     int HealthBarBaseOffset = 60;
     Vec2 HealthBarHPOffset = Vec2(100, 15);
 
-    int Damage = 1;
+    int Damage = 20;
     KeyboardControllerComponent* keyboard;
-    VelocityComponent* VelComponent;
 
  
     DrawNode* debug;
@@ -77,11 +82,34 @@ public:
 
     int BulletArraySize = 20;
 
-    Vec2 Bounds = (Vec2(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height));
+    vector<pair<Sprite*, int>> Meteors;
+
+    Sprite* Meteor01;
+    Sprite* Meteor02;
+    Sprite* Meteor03;
+    Sprite* Meteor04;
+    Sprite* Meteor05;
+
+    float meteorScale = 0.1f;
+
+    int meteorHP = 100;
+
+    int meteor01HP;
+    int meteor02HP;
+    int meteor03HP;
+    int meteor04HP;
+    int meteor05HP;
+
+    int wavesCompleted = 0;
+    //waves will be a component that will be added to teh player an dthen will be checked if completeion, upon completion it will remove
+    //itself and then ++ var, when reached certain var, deploy crown to win, or countinue for endless gamemode
+
+    int baseMeteorTimer = 200;
+
+    Vec2 MaxBounds = (Vec2(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height));
     Vec2 MinBounds = (Vec2(0, -50));
 
-    Sprite* Meteor;
-    int meteorHP = 100;
+
 
 
      //implement the "static create()" method manually

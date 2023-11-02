@@ -1,12 +1,41 @@
 #include "Assignment2.h"
 
 
+
 Scene* Assignment2::createScene()
 {
 	return Assignment2::create();
 }
 
+void Assignment2::Wave1(float dt)
+{
+	//random numebr across x axis
 
+	//auto iMeteor : Meteors
+	int i = 0;
+
+
+	while (baseMeteorTimer > 0)
+	{
+		if (baseMeteorTimer == 0)
+		{
+			Meteors[i].first->setPosition(100, 100 * i);
+		}
+
+		baseMeteorTimer -= (1 * dt);
+	}
+	/*for (auto iMeteor : Meteors)
+	{
+
+		iMeteor.first->setPosition();
+		baseMeteorTimer
+	}*/
+
+	//Meteor
+	
+
+	
+}
 
 
 bool Assignment2::init()
@@ -35,19 +64,43 @@ bool Assignment2::init()
 	for (int i = 0; i < BulletArraySize-1; i++)
 	{
 		this->addChild(Bullets[i], 1);
-		Bullets[i]->addComponent(CollisionComponent::createCircle((Bullets[i]->getContentSize().height) / 2));
+		Bullets[i]->addComponent(CollisionComponent::createDot());
+		//Bullets[i]->addComponent(CollisionComponent::createCircle((Bullets[i]->getContentSize().height) / 2));
 		Bullets[i]->addComponent(VelocityComponent::create(Vec2(0, BulletVelocity), BulletVelocity));
 		Bullets[i]->setVisible(false);
 	}
 
+
+
+	
+
+	Meteors.push_back(pair(Meteor01 = Sprite::create("meteor.png"), meteor01HP));
+	Meteors.push_back(pair(Meteor02 = Sprite::create("meteor.png"), meteor02HP));
+	Meteors.push_back(pair(Meteor03 = Sprite::create("meteor.png"), meteor03HP));
+	Meteors.push_back(pair(Meteor04 = Sprite::create("meteor.png"), meteor04HP));
+	Meteors.push_back(pair(Meteor05 = Sprite::create("meteor.png"), meteor05HP));
+
+
+	for (auto iMeteor : Meteors)
+	{
+		iMeteor.first->setScale(meteorScale);
+		this->addChild(iMeteor.first, 2);
+		iMeteor.first->addComponent(CollisionComponent::createCircle(((iMeteor.first->getContentSize().height) / 2) * meteorScale));
+		iMeteor.first->setPosition(Vec2(MaxBounds + MaxBounds));
+		iMeteor.first->setVisible(false);
+	}
+
+	
+
 	ship = Sprite::create("fighter.png");
+	//ship->removeAllComponents();				////
 	ship->setPosition(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 10);
 	this->addChild(ship, 2);
 
 
 	keyboard = KeyboardControllerComponent::create(0);
 	ship->addComponent(keyboard);
-
+	
 	ship->addComponent(CollisionComponent::createCircle((ship->getContentSize().height) / 3));
 
 	healthBarBase = Sprite::create("bar_empty.png");
@@ -62,7 +115,6 @@ bool Assignment2::init()
 	debug = DrawNode::create(5);
 	this->addChild(debug, 5);
 
-	Meteor = Sprite::create("meteor.png");
 
 	label = Label::create();
 	label->setScale(2);
@@ -85,7 +137,8 @@ void Assignment2::update(float dt)
 		{
 			gameState = running;
 			label->setVisible(false);
-			//Wave1;							//start wave 1
+			
+			ship->addComponent(WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, Meteors));					//start wave 1
 		}
 	}
 	else
@@ -119,8 +172,8 @@ void Assignment2::update(float dt)
 			{
 				if (Bullets[i]->isVisible() == false)		
 				{
+					Bullets[i]->setPosition(Vec2(ship->getPositionX(), ship->getPositionY() + HealthBarBaseOffset));
 					Bullets[i]->setVisible(true);
-					Bullets[i]->setPosition(Vec2(ship->getPositionX(), ship->getPositionY()));
 					break;
 				}
 			}
@@ -142,7 +195,7 @@ void Assignment2::update(float dt)
 		{
 			if (Bullets[i]->isVisible())
 			{
-				if (Bullets[i]->getPosition().x > Bounds.x || Bullets[i]->getPosition().x < MinBounds.x || Bullets[i]->getPosition().y > Bounds.y|| Bullets[i]->getPosition().y < MinBounds.y)
+				if (Bullets[i]->getPosition().x > MaxBounds.x || Bullets[i]->getPosition().x < MinBounds.x || Bullets[i]->getPosition().y > MaxBounds.y|| Bullets[i]->getPosition().y < MinBounds.y)
 				{
 					Bullets[i]->setVisible(false);
 				}
@@ -153,10 +206,10 @@ void Assignment2::update(float dt)
 
 		healthBarBase->setPosition(Vec2(ship->getPositionX(), ship->getPositionY() - HealthBarBaseOffset));
 		healthBarHP->setPosition(healthBarBase->getPosition() - HealthBarHPOffset);
-		if (healthBarHP->getScaleX() >= 0)
+		/*if (healthBarHP->getScaleX() >= 0)
 		{
 			healthBarHP->setScaleX(healthBarHP->getScaleX() - (Damage * 0.001f));
-		}
+		}*/
 
 		//COLLISION
 
@@ -176,24 +229,41 @@ void Assignment2::update(float dt)
 		for (auto it = children.begin(); it != children.end(); it++)
 		{
 			auto collision = dynamic_cast<CollisionComponent*>((*it)->getComponent("CollisionComponent"));
-
 			if (collision != nullptr)
 			{
+
+				//works if placed here
+
+				
 				for (auto it2 = it + 1; it2 != children.end(); it2++)
 				{
+					//works if placed here
+					
 					auto other = dynamic_cast<CollisionComponent*>((*it2)->getComponent("CollisionComponent"));
-
+					//if (other != nullptr && other->getOwner() == ship && other->IsColliding())				//if something collides with the ship
+					//{
+					//	healthBarHP->setScaleX(healthBarHP->getScaleX() - (10 * 0.001f));
+					//}
 					if (other != nullptr)
 					{
+						//works here if other instead of collision
 						if (collision->IsColliding(other))
 						{
-							collision->SetColliding(true);
-							other->SetColliding(true);
+							if (other->getOwner() == ship)				//it works somehow
+							{
+								healthBarHP->setScaleX(healthBarHP->getScaleX() - (Damage * 0.01f));
+								collision->getOwner()->setPosition(100, 100);
+							}
+							collision->SetColliding(true);							//works if other is NOT // out
+							other->SetColliding(true);					
+							
 						}
 					}
 				}
 			}
 		}
+
+		//debug mode
 
 		if (debugDrawEnabled)
 		{
@@ -219,8 +289,16 @@ void Assignment2::update(float dt)
 					break;
 					case CollisionComponent::Circle:
 					{
+						//if (collision->getOwner() == ship && collision->IsColliding())				//if something collides with the ship
+						//{
+						//	healthBarHP->setScaleX(healthBarHP->getScaleX() - (10 * 0.001f));
+						//	
+						//}
+						
 						auto radius = collision->GetRadius();
 						debug->drawCircle(position, radius, 10, 360, false, color);
+
+
 					}
 					break;
 					case CollisionComponent::Point:
@@ -229,18 +307,14 @@ void Assignment2::update(float dt)
 					}
 				}
 			}
-			//switchstate = !switchstate;
 		}
 	}
 };
 
-bool Wave1()
-{
-	//Meteor
 
 
-	return true;
-}
+
+
 
 
 
