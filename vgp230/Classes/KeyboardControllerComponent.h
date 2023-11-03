@@ -74,6 +74,11 @@ public:
                 {
                     debug = !debug;
                 }
+                else if (keyCode == EventKeyboard::KeyCode::KEY_B)
+                {
+                    bomb = true;
+                }
+
             };
         keyboardListener->onKeyReleased = [=](EventKeyboard::KeyCode keyCode, Event* event)
             {
@@ -96,6 +101,10 @@ public:
                 else if (keyCode == fireKeyCode)
                 {
                     fire = false;
+                }
+                else if (keyCode == EventKeyboard::KeyCode::KEY_B)
+                {
+                    bomb = false;
                 }
             };
 
@@ -130,6 +139,11 @@ public:
         return fire;
     }
 
+    bool IsBombPressed()
+    {
+        return bomb;
+    }
+
     bool IsDebugPressed()
     {
         return debug;
@@ -146,5 +160,6 @@ private:
     bool up = false;
     bool down = false;
     bool fire = false;
+    bool bomb = false;
     bool debug = false;
 };

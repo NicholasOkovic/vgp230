@@ -18,44 +18,49 @@ public:
     virtual bool init();
     virtual void update(float dt);
 
-    void Wave1(float dt);
-
     enum GameState
     {
         menu,
         running,
-        victory
+        victory,
+        defeat
     }
     gameState = menu;
 
     bool switchstate = true;
 
-    //Sprite* Bullets[20];
-
     int FireTimer = 0;
     int FireCooldown = 20;
 
-    int Velocity = 150;
+    int ShipVelocity = 250;
     int BulletVelocity = 500;
-    int MeteorVelocity = -250;
+    int MeteorVelocity = -150;
 
-    Sprite* ship2;
+    Sprite* PUSpeedBoost;
+    int SpeedBoostAmount = 125;
+    Sprite* PUWeaponBoost;
+    int WeaponBoostAmount = -5;
+
     Sprite* ship;
 
-    Sprite* bullet;
     Sprite* healthBarBase;
     Sprite* healthBarHP;
     int HealthBarBaseOffset = 60;
     Vec2 HealthBarHPOffset = Vec2(100, 15);
 
-    int Damage = 20;
     KeyboardControllerComponent* keyboard;
-
+    WaveComponent* WaveControl;
  
     DrawNode* debug;
     bool debugDrawEnabled = false;
 
     Label* label;
+    Label* score;
+    Label* victoryTxt;
+
+    int iScore = 0;
+
+    int bombAmount = 1;
 
     Sprite* Bullets[20];
 
@@ -82,23 +87,25 @@ public:
 
     int BulletArraySize = 20;
 
-    vector<pair<Sprite*, int>> Meteors;
+    int bulletDamage = 40;
 
-    Sprite* Meteor01;
-    Sprite* Meteor02;
-    Sprite* Meteor03;
-    Sprite* Meteor04;
-    Sprite* Meteor05;
+    Vec2 bulletInitPos = Vec2(2000, 2000);     
 
-    float meteorScale = 0.1f;
+    //vector<pair<Sprite*, int>> Meteors;
+
+    //Sprite* Meteor01;
+    //Sprite* Meteor02;       //
+    //Sprite* Meteor03;
+    //Sprite* Meteor04;
+    //Sprite* Meteor05;
+
+    int meteorDamage = 20;
+
+    Vec2 meteorInitPos = Vec2(4000, 2000);
+
+    float meteorScale = 0.1f;   //
 
     int meteorHP = 100;
-
-    int meteor01HP;
-    int meteor02HP;
-    int meteor03HP;
-    int meteor04HP;
-    int meteor05HP;
 
     int wavesCompleted = 0;
     //waves will be a component that will be added to teh player an dthen will be checked if completeion, upon completion it will remove
@@ -108,8 +115,9 @@ public:
 
     Vec2 MaxBounds = (Vec2(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height));
     Vec2 MinBounds = (Vec2(0, -50));
+    Vec2 ScorePlacement = Vec2(60, Director::getInstance()->getVisibleSize().height - 30);
 
-
+    int test = 0;
 
 
      //implement the "static create()" method manually
