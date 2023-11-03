@@ -10,57 +10,24 @@ class WaveComponent : public Component
 {
 public:
 	
-	static WaveComponent* create(int w, int m, int HP, int timer/*, vector<pair<Sprite*, int>>& Meteors*/, Scene* scene)
+	static WaveComponent* create(int w, int m, int HP, int timer, Scene* scene)
 	{
-		auto WaveManage = new WaveComponent(w, m, HP, timer/*, Meteors*/);
+		auto WaveManage = new WaveComponent(w, m, HP, timer);
 		WaveManage->init(scene);
 		WaveManage->autorelease();
 		return WaveManage;
 	}
-	WaveComponent(int w, int m, int HP, int timer/*, vector<pair<Sprite*, int>>& Meteors*/)
+	WaveComponent(int w, int m, int HP, int timer)
 	{
-
-		//init all meteors
-		
-		//srand(time(0));
-
-		//CMeteors.push_back(pair(Meteor01 = Sprite::create("meteor.png"), meteorHP));	//////test
-		//CMeteors.push_back(pair(Meteor02 = Sprite::create("meteor.png"), meteorHP));
-		//CMeteors.push_back(pair(Meteor03 = Sprite::create("meteor.png"), meteorHP));
-		//CMeteors.push_back(pair(Meteor04 = Sprite::create("meteor.png"), meteorHP));
-		//CMeteors.push_back(pair(Meteor05 = Sprite::create("meteor.png"), meteorHP));
-
-
-		//for (auto iMeteor : CMeteors)
-		//{
-		//	iMeteor.first->setScale(meteorScale);
-		//	this->getOwner()->addChild(iMeteor.first, 2);					///find a way to add them as children to the scene
-		//	iMeteor.first->setName("Meteor");
-		//	iMeteor.first->addComponent(CollisionComponent::createCircle(((iMeteor.first->getContentSize().height) / 2) * meteorScale));
-		//	iMeteor.first->setPosition(meteorInitPos);
-		//	iMeteor.first->setVisible(false);
-		//}
-
 		baseMeteorTimer = timer;
 		meteorTimer = timer;
 		meteorHP = HP;
 		meteorSpeed = m;
-		wavesCompleted = w;
-
-		/*for (auto iMeteor : Meteors)
-		{
-			CMeteors.push_back(pair(iMeteor.first, iMeteor.second));
-		}*/
-
-
-		//meteorSpawnLoc = Director::getInstance()->getVisibleSize().width - ((CMeteors[0].first->getContentSize().width * CMeteors[0].first->getScale())/2);
-
+		wave = w+1;
 	}
 
 	virtual bool init(Scene* scene)
 	{
-
-
 		srand(time(0));
 
 		CMeteors.push_back(pair(Meteor01 = Sprite::create("meteor.png"), meteorHP));	//////test
@@ -73,38 +40,39 @@ public:
 		for (auto iMeteor : CMeteors)
 		{
 			iMeteor.first->setScale(meteorScale);
-			scene->addChild(iMeteor.first, 2);					///find a way to add them as children to the scene
+			scene->addChild(iMeteor.first, 2);					
 			iMeteor.first->setName("Meteor");
 			iMeteor.first->addComponent(CollisionComponent::createCircle(((iMeteor.first->getContentSize().height) / 2) * meteorScale));
 			iMeteor.first->setPosition(meteorInitPos);
 			iMeteor.first->setVisible(false);
 		}
-		/*for (auto iMeteor : Meteors)
-		{
-			CMeteors.push_back(pair(iMeteor.first, iMeteor.second));
-		}*/
-
 
 		meteorSpawnLoc = Director::getInstance()->getVisibleSize().width - ((CMeteors[0].first->getContentSize().width * CMeteors[0].first->getScale()) / 2);
 
-
+		wavesTxt = Label::create();
+		wavesTxt->setScale(2);
+		wavesTxt->setString("Wave: 1");
+		wavesTxt->setPosition(WavePlacement);
+		scene->addChild(wavesTxt, 5);
 		_name = "WavesComponent";
 		return true;
 	}
 
-	virtual void update(float dt)			//reset all the meteor in comp, and edit var in comp | limit: wave detection, nvm create comp object and method detect wave
+	virtual void update(float dt)			
 	{
-
-
-		if (iterator >= CMeteors.size() && !CMeteors[CMeteors.size()-1].first->isVisible())	//when wave is over	//only checks if last meteor is destroyed to start next wave
+		if (iterator >= CMeteors.size() && !CMeteors[CMeteors.size()-1].first->isVisible())			//when wave is over	//only checks if last meteor is destroyed to start next wave
 		{
-			//finished = true;
-			wavesCompleted++;
+			wave++;
 			meteorHP += 5;
-			baseMeteorTimer - 100;
+			if (baseMeteorTimer > 20)
+			{
+				baseMeteorTimer -= 20;
+			}
 			meteorSpeed -= 100;
 			meteorTimer = baseMeteorTimer;
 			iterator = 0;
+			toString = to_string(wave);
+			wavesTxt->setString("Wave: " + toString);
 
 			MeteorReset(CMeteors);
 		}
@@ -138,9 +106,9 @@ public:
 		CMeteors[meteor].second -= damage;
 	}
 
-	bool IsWaveDone() 
+	int GetWave() 
 	{
-		return finished;
+		return wave+1;
 	}
 
 private:
@@ -157,10 +125,12 @@ private:
 	int meteorTimer;
 	int meteorHP;
 	int meteorSpeed;
-	int wavesCompleted;
+	int wave;
 	int iterator = 0;
 	int i2 = 0;
-	bool finished = false;
+	string toString;
+	Label* wavesTxt;
+	Vec2 WavePlacement = Vec2(Director::getInstance()->getVisibleSize().width - 60, Director::getInstance()->getVisibleSize().height - 30);
 	Vec2 meteorInitPos = Vec2(4000, 2000);
 	int meteorSpawnLoc;
 	int randomNumber;

@@ -40,22 +40,6 @@ bool Assignment2::init()
 		Bullets[i]->setVisible(false);
 	}
 
-	//Meteors.push_back(pair(Meteor01 = Sprite::create("meteor.png"), meteorHP));
-	//Meteors.push_back(pair(Meteor02 = Sprite::create("meteor.png"), meteorHP));
-	//Meteors.push_back(pair(Meteor03 = Sprite::create("meteor.png"), meteorHP));
-	//Meteors.push_back(pair(Meteor04 = Sprite::create("meteor.png"), meteorHP));
-	//Meteors.push_back(pair(Meteor05 = Sprite::create("meteor.png"), meteorHP));				//////stuff for change
-
-
-	//for (auto iMeteor : Meteors)
-	//{
-	//	iMeteor.first->setScale(meteorScale);
-	//	this->addChild(iMeteor.first, 2);
-	//	iMeteor.first->setName("Meteor");
-	//	iMeteor.first->addComponent(CollisionComponent::createCircle(((iMeteor.first->getContentSize().height) / 2) * meteorScale));
-	//	iMeteor.first->setPosition(meteorInitPos);
-	//	iMeteor.first->setVisible(false);
-	//}
 
 	PUWeaponBoost = Sprite::create("cheese.png");
 	this->addChild(PUWeaponBoost, 2);
@@ -72,25 +56,8 @@ bool Assignment2::init()
 	ship = Sprite::create("fighter.png");
 	ship->setPosition(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 10);
 	this->addChild(ship, 2);
-
-
 	keyboard = KeyboardControllerComponent::create(0);
 	ship->addComponent(keyboard);
-	/*ship->removeComponent(keyboard);
-	ship->addComponent(keyboard);*/
-
-	//WaveControl = WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, this);
-
-	//Meteors = WaveControl->GetMeteors();
-
-	//this->addComponent(WaveControl);
-	//ship->addComponent(WaveControl);
-
-
-
-	//keyboard->onRemove();
-	//ship->removeComponent(ship->getComponent("KeyboardControllerComponent"));		///
-
 	ship->addComponent(CollisionComponent::createCircle((ship->getContentSize().height) / 3));
 
 	healthBarBase = Sprite::create("bar_empty.png");
@@ -101,6 +68,13 @@ bool Assignment2::init()
 	healthBarHP->setAnchorPoint(Vec2(0, 0));
 	healthBarHP->setPosition(healthBarBase->getPosition() - HealthBarHPOffset);
 	this->addChild(healthBarHP, 4);
+
+	MeteorEndZone = Sprite::create("button_off.png");
+	this->addChild(MeteorEndZone, 0);
+	MeteorEndZone->setPosition(Director::getInstance()->getVisibleSize().width / 2, 0);
+	MeteorEndZone->setScaleX(10);
+	MeteorEndZone->addComponent(CollisionComponent::createBox(MeteorEndZone->getContentSize().width * MeteorEndZone->getScaleX(), MeteorEndZone->getContentSize().height * MeteorEndZone->getScaleY()));
+	MeteorEndZone->setVisible(false);
 
 	debug = DrawNode::create(5);
 	this->addChild(debug, 5);
@@ -117,6 +91,13 @@ bool Assignment2::init()
 	victoryTxt->setPosition(Vec2(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 2));
 	this->addChild(victoryTxt, 6);
 	victoryTxt->setVisible(false);
+
+	defeatTxt = Label::create();
+	defeatTxt->setScale(5);
+	defeatTxt->setString("Defeat");
+	this->addChild(defeatTxt, 6);
+	defeatTxt->setPosition(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 2);
+	defeatTxt->setVisible(false);
 
 	keyboard->initInput();
 
@@ -202,10 +183,6 @@ void Assignment2::update(float dt)
 
 		healthBarBase->setPosition(Vec2(ship->getPositionX(), ship->getPositionY() - HealthBarBaseOffset));
 		healthBarHP->setPosition(healthBarBase->getPosition() - HealthBarHPOffset);
-		/*if (healthBarHP->getScaleX() >= 0)
-		{
-			healthBarHP->setScaleX(healthBarHP->getScaleX() - (Damage * 0.001f));
-		}*/
 
 		//COLLISION
 
@@ -227,21 +204,11 @@ void Assignment2::update(float dt)
 			auto collision = dynamic_cast<CollisionComponent*>((*it)->getComponent("CollisionComponent"));
 			if (collision != nullptr)
 			{
-				//works if placed here
-
-				
 				for (auto it2 = it + 1; it2 != children.end(); it2++)
 				{
-					//works if placed here
-					
 					auto other = dynamic_cast<CollisionComponent*>((*it2)->getComponent("CollisionComponent"));
-					//if (other != nullptr && other->getOwner() == ship && other->IsColliding())				//if something collides with the ship
-					//{
-					//	healthBarHP->setScaleX(healthBarHP->getScaleX() - (10 * 0.001f));
-					//}
 					if (other != nullptr)
 					{
-						//works here if other instead of collision
 						if (collision->IsColliding(other))
 						{
 							if (collision->GetCollisionType() == CollisionComponent::Point && other->getOwner()->getName() == "Meteor")		//if meteor colliding with bullet
@@ -254,7 +221,6 @@ void Assignment2::update(float dt)
 									if (other->getOwner() == WaveControl->GetMeteors()[i].first)
 									{
 										WaveControl->DamageMeteor(bulletDamage, i);
-										//WaveControl->GetMeteors()[i].second -= bulletDamage;
 									}
 								}
 							}
@@ -265,6 +231,10 @@ void Assignment2::update(float dt)
 									healthBarHP->setScaleX(healthBarHP->getScaleX() - (meteorDamage * 0.01f));
 									other->getOwner()->setVisible(false);
 									other->getOwner()->setPosition(MaxBounds + MaxBounds);
+								}
+								else if (other->getOwner()->getName() == "Win")
+								{
+									gameState = victory;
 								}
 							}
 							else if (other->getOwner() == ship)
@@ -281,6 +251,12 @@ void Assignment2::update(float dt)
 									collision->getOwner()->setVisible(false);
 									collision->getOwner()->setPosition(MaxBounds + MaxBounds);
 								}
+							}
+							else if (collision->GetCollisionType() == CollisionComponent::Box && other->getOwner()->getName() == "Meteor")		//if meteor colliding with bullet
+							{
+								other->getOwner()->setVisible(false);
+								other->getOwner()->setPosition(MaxBounds + MaxBounds);
+								healthBarHP->setScaleX(healthBarHP->getScaleX() - (meteorDamage * 0.01f));
 							}
 							collision->SetColliding(true);							
 							other->SetColliding(true);					
@@ -316,15 +292,8 @@ void Assignment2::update(float dt)
 					break;
 					case CollisionComponent::Circle:
 					{
-						//if (collision->getOwner() == ship && collision->IsColliding())				//if something collides with the ship
-						//{
-						//	healthBarHP->setScaleX(healthBarHP->getScaleX() - (10 * 0.001f));
-						//	
-						//}
-						
 						auto radius = collision->GetRadius();
 						debug->drawCircle(position, radius, 10, 360, false, color);
-						
 					}
 					break;
 					case CollisionComponent::Point:
@@ -353,7 +322,7 @@ void Assignment2::update(float dt)
 			}
 		}
 
-		//if meteor dies
+		//if a meteor dies
 
 		for (int i = 0; i < WaveControl->GetMeteors().size(); i++)
 		{
@@ -362,56 +331,29 @@ void Assignment2::update(float dt)
 				WaveControl->GetMeteors()[i].first->setVisible(false);
 				WaveControl->GetMeteors()[i].first->setPosition(meteorInitPos);
 				iScore++;
-				string scoreString = to_string(iScore);
-				score->setString("Score: " + scoreString);
+				string toString = to_string(iScore);
+				scoreTxt->setString("Score: " + toString);
+
+				if (iScore == 5)	//create win condition
+				{
+					WinCon = Sprite::create("CloseNormal.png");
+					this->addChild(WinCon, 2);
+					WinCon->addComponent(CollisionComponent::createCircle((WinCon->getContentSize().height) / 2));
+					WinCon->setName("Win");
+					WinCon->setPosition(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height / 1.1);
+				}
 			}
 		}
 
 
-		//if win
-		/*if (iScore == 5)
+
+		//if death
+		if (healthBarHP->getScaleX() <= 0.01)
 		{
-			gameState = victory;
-		}*/
+			gameState = defeat;
+		}
 
 
-		//wave end
-
-		//for (int i = 0; i < Meteors.size(); i++)		//when wave control isnt init
-		//{
-		//	if (!Meteors[i].first->isVisible())
-		//	{
-		//		test++;
-		//	}
-		//}
-		//if (test == Meteors.size())
-		//{
-		//	test = 0;
-		//	//WaveComponent::release;
-		//	//ship->removeComponent()
-		//	//ship->removeComponent(ship->getComponent("WaveComponent"));
-		//	ship->addComponent(/*WaveControl*/WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, Meteors));
-
-		//}
-
-	//if (WaveControl->IsWaveDone() && test == 0)		//when wave control is init
-	//{
-	//	//ship->setVisible(false);
-	//	ship->removeComponent(WaveControl);
-	//	wavesCompleted++;
-	//	meteorHP + 5;
-	//	baseMeteorTimer--;
-	//	MeteorVelocity++;
-	//	//WaveControl->release(); //doesnt delete it
-	//	
-	//	WaveControl = WaveComponent::
-	//	//WaveControl = WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, Meteors);
-	//	ship->addComponent(WaveControl);	//adding the same component twice breaks it, 
-	//	test++;
-	//}
-	
-
-	
 	}
 	else if (gameState == menu)
 	{
@@ -419,29 +361,24 @@ void Assignment2::update(float dt)
 		{
 			gameState = running;
 			label->setVisible(false);
-			score = Label::create();
-			score->setScale(2);
-			score->setString("Score: 0");
-
-			score->setPosition(ScorePlacement);
-			this->addChild(score, 5);
-			
-
-			//WaveControl = WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, Meteors);
+			scoreTxt = Label::create();
+			scoreTxt->setScale(2);
+			scoreTxt->setString("Score: 0");
+			scoreTxt->setPosition(ScorePlacement);
+			this->addChild(scoreTxt, 5);
 
 
-			/*if (ship->getComponent("KeyBoardControllerComponent") == true)
-			{
-				ship->setVisible(false);
-			}*/
 			WaveControl = WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, this);
-			ship->addComponent(WaveControl/*WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, Meteors)*/);					//start wave 1
-			//ship.com
+			ship->addComponent(WaveControl);					
 		}
 	}
 	else if (gameState == victory)
 	{
 		victoryTxt->setVisible(true);
+	}
+	else if (gameState == defeat)
+	{
+		defeatTxt->setVisible(true);
 	}
 
 };

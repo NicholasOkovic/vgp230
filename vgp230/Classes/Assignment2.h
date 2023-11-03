@@ -30,7 +30,7 @@ public:
     bool switchstate = true;
 
     int FireTimer = 0;
-    int FireCooldown = 20;
+    int FireCooldown = 30;
 
     int ShipVelocity = 250;
     int BulletVelocity = 500;
@@ -39,7 +39,11 @@ public:
     Sprite* PUSpeedBoost;
     int SpeedBoostAmount = 125;
     Sprite* PUWeaponBoost;
-    int WeaponBoostAmount = -5;
+    int WeaponBoostAmount = -15;
+
+    Sprite* WinCon;
+
+    Sprite* MeteorEndZone;
 
     Sprite* ship;
 
@@ -55,8 +59,9 @@ public:
     bool debugDrawEnabled = false;
 
     Label* label;
-    Label* score;
+    Label* scoreTxt;
     Label* victoryTxt;
+    Label* defeatTxt;
 
     int iScore = 0;
 
@@ -91,25 +96,15 @@ public:
 
     Vec2 bulletInitPos = Vec2(2000, 2000);     
 
-    //vector<pair<Sprite*, int>> Meteors;
-
-    //Sprite* Meteor01;
-    //Sprite* Meteor02;       //
-    //Sprite* Meteor03;
-    //Sprite* Meteor04;
-    //Sprite* Meteor05;
 
     int meteorDamage = 20;
 
     Vec2 meteorInitPos = Vec2(4000, 2000);
 
-    float meteorScale = 0.1f;   //
-
     int meteorHP = 100;
 
     int wavesCompleted = 0;
-    //waves will be a component that will be added to teh player an dthen will be checked if completeion, upon completion it will remove
-    //itself and then ++ var, when reached certain var, deploy crown to win, or countinue for endless gamemode
+  
 
     int baseMeteorTimer = 200;
 
