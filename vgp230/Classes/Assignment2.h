@@ -63,7 +63,7 @@ public:
 
     int iScore = 0;
 
-    int bombAmount = 2;
+    int bombAmount = 1;
 
     Sprite* Bullets[20];
 
