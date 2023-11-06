@@ -30,12 +30,16 @@ public:
 	{
 		srand(time(0));
 
-		CMeteors.push_back(pair(Meteor01 = Sprite::create("meteor.png"), meteorHP));	//////test
+		CMeteors.push_back(pair(Meteor01 = Sprite::create("meteor.png"), meteorHP));	
 		CMeteors.push_back(pair(Meteor02 = Sprite::create("meteor.png"), meteorHP));
 		CMeteors.push_back(pair(Meteor03 = Sprite::create("meteor.png"), meteorHP));
 		CMeteors.push_back(pair(Meteor04 = Sprite::create("meteor.png"), meteorHP));
 		CMeteors.push_back(pair(Meteor05 = Sprite::create("meteor.png"), meteorHP));
-
+		CMeteors.push_back(pair(Meteor06 = Sprite::create("meteor.png"), meteorHP));	
+		CMeteors.push_back(pair(Meteor07 = Sprite::create("meteor.png"), meteorHP));
+		CMeteors.push_back(pair(Meteor08 = Sprite::create("meteor.png"), meteorHP));
+		CMeteors.push_back(pair(Meteor09 = Sprite::create("meteor.png"), meteorHP));
+		CMeteors.push_back(pair(Meteor10 = Sprite::create("meteor.png"), meteorHP));
 
 		for (auto iMeteor : CMeteors)
 		{
@@ -60,15 +64,15 @@ public:
 
 	virtual void update(float dt)			
 	{
-		if (iterator >= CMeteors.size() && !CMeteors[CMeteors.size()-1].first->isVisible())			//when wave is over	//only checks if last meteor is destroyed to start next wave
+		if (iterator >= CMeteors.size() && !CMeteors[CMeteors.size()-1].first->isVisible())			//when wave is over	//checks if last meteor is destroyed to start next wave
 		{
 			wave++;
-			meteorHP += 5;
-			if (baseMeteorTimer > 20)
+			//meteorHP += 10;	//kidna dont like this, but if you want to make the meteors healthier per wave you can
+			if (baseMeteorTimer > 10)
 			{
-				baseMeteorTimer -= 20;
+				baseMeteorTimer -= 10;
 			}
-			meteorSpeed -= 100;
+			meteorSpeed -= 50;
 			meteorTimer = baseMeteorTimer;
 			iterator = 0;
 			toString = to_string(wave);
@@ -78,7 +82,6 @@ public:
 		}
 		else if (meteorTimer == 0 && iterator < CMeteors.size())
 		{
-
 			CMeteors[iterator].first->setPosition(randomNumber = rand() % meteorSpawnLoc + ((CMeteors[0].first->getContentSize().width * CMeteors[0].first->getScale()) / 2), Director::getInstance()->getVisibleSize().height);	//do a rand pos
 			CMeteors[iterator].first->addComponent(VelocityComponent::create(Vec2(0, meteorSpeed), -meteorSpeed));
 			CMeteors[iterator].first->setVisible(true);
@@ -119,6 +122,11 @@ private:
 	Sprite* Meteor03;
 	Sprite* Meteor04;
 	Sprite* Meteor05;
+	Sprite* Meteor06;
+	Sprite* Meteor07;
+	Sprite* Meteor08;
+	Sprite* Meteor09;
+	Sprite* Meteor10;
 
 	float meteorScale = 0.1f;
 	int baseMeteorTimer;

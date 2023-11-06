@@ -1,12 +1,9 @@
 #include "Assignment2.h"
 
-
-
 Scene* Assignment2::createScene()
 {
 	return Assignment2::create();
 }
-
 
 bool Assignment2::init()
 {
@@ -39,7 +36,6 @@ bool Assignment2::init()
 		Bullets[i]->setPosition(bulletInitPos);
 		Bullets[i]->setVisible(false);
 	}
-
 
 	PUWeaponBoost = Sprite::create("cheese.png");
 	this->addChild(PUWeaponBoost, 2);
@@ -112,7 +108,7 @@ void Assignment2::update(float dt)
 
 		if (FireTimer >= 0)
 		{
-			FireTimer = FireTimer - (1 * dt);
+			FireTimer -= (1 * dt);
 		}
 
 		//CONTROLLER
@@ -139,6 +135,7 @@ void Assignment2::update(float dt)
 			{
 				if (Bullets[i]->isVisible() == false)		
 				{
+					SimpleAudioEngine::getInstance()->playEffect("blasterSound.mp3");					
 					Bullets[i]->setPosition(Vec2(ship->getPositionX(), ship->getPositionY() + HealthBarBaseOffset));
 					Bullets[i]->setVisible(true);
 					break;
@@ -334,7 +331,7 @@ void Assignment2::update(float dt)
 				string toString = to_string(iScore);
 				scoreTxt->setString("Score: " + toString);
 
-				if (iScore == 5)	//create win condition
+				if (iScore == 10)	//create win condition
 				{
 					WinCon = Sprite::create("CloseNormal.png");
 					this->addChild(WinCon, 2);
@@ -344,21 +341,20 @@ void Assignment2::update(float dt)
 				}
 			}
 		}
-
-
-
 		//if death
 		if (healthBarHP->getScaleX() <= 0.01)
 		{
 			gameState = defeat;
 		}
-
-
 	}
+	//more gamestates checks
 	else if (gameState == menu)
 	{
 		if (keyboard->IsFirePressed())
 		{
+			backgroundMusic->getInstance()->playBackgroundMusic("Field of Hopes and Dreams.mp3", true);
+			backgroundMusic->getInstance()->setBackgroundMusicVolume(0.1);
+
 			gameState = running;
 			label->setVisible(false);
 			scoreTxt = Label::create();
@@ -366,7 +362,6 @@ void Assignment2::update(float dt)
 			scoreTxt->setString("Score: 0");
 			scoreTxt->setPosition(ScorePlacement);
 			this->addChild(scoreTxt, 5);
-
 
 			WaveControl = WaveComponent::create(wavesCompleted, MeteorVelocity, meteorHP, baseMeteorTimer, this);
 			ship->addComponent(WaveControl);					
@@ -380,13 +375,4 @@ void Assignment2::update(float dt)
 	{
 		defeatTxt->setVisible(true);
 	}
-
 };
-
-
-
-
-
-
-
-
