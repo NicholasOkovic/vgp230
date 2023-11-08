@@ -54,6 +54,52 @@ AppDelegate::~AppDelegate()
 #endif
 }
 
+void AppDelegate::InitializeLevelSwitching()
+{
+    auto director = Director::getInstance();
+
+    auto keyboardListener = EventListenerKeyboard::create();
+    keyboardListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event)
+    {
+        switch (keyCode)
+        {
+        case EventKeyboard::KeyCode::KEY_PERIOD:
+            SwitchToNextLevel();
+            break;
+        case EventKeyboard::KeyCode::KEY_COMMA:
+            SwitchToPreviousLevel();
+            break;
+        }
+    };
+    director->getEventDispatcher()->addEventListenerWithFixedPriority(keyboardListener, 1);
+}
+
+
+void AppDelegate::SwitchToNextLevel() 
+{
+    if (currentScene < scenes.size()-1)
+    {
+        currentScene++;
+        auto scene = scenes[currentScene]();
+        Director::getInstance()->replaceScene(scene);
+    }
+
+    
+}
+
+void AppDelegate::SwitchToPreviousLevel()
+{
+    if (currentScene > 0)
+    {
+        currentScene--;
+        auto scene = scenes[currentScene]();
+        Director::getInstance()->replaceScene(scene);
+    }
+
+    //Director::getInstance()->replaceScene(scene);
+}
+
+
 // if you want a different context, modify the value of glContextAttrs
 // it will affect all platforms
 void AppDelegate::initGLContextAttrs()
@@ -113,9 +159,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     //auto scene = HelloWorld::createScene();
-    //auto scene = Assignment1::createScene();
+    
+    InitializeLevelSwitching();
 
-    auto scene = Assignment2::createScene();
+    auto scene = Assignment1::createScene();
+    //auto scene = Assignment2::createScene();
     //auto scene = CollisionTestScene::create();
     //auto scene = MazeScene::create();
 

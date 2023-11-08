@@ -1,7 +1,7 @@
 Controls: 
 Movement: WASD
 Fire: Enter
-Bomb x2: B
+Bomb x1: B
 Debug: L
 
 

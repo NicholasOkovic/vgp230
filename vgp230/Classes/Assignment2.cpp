@@ -353,7 +353,7 @@ void Assignment2::update(float dt)
 		if (keyboard->IsFirePressed())
 		{
 			backgroundMusic->getInstance()->playBackgroundMusic("Field of Hopes and Dreams.mp3", true);
-			backgroundMusic->getInstance()->setBackgroundMusicVolume(0.1);
+			backgroundMusic->getInstance()->setBackgroundMusicVolume(0.5);
 
 			gameState = running;
 			label->setVisible(false);

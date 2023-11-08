@@ -8,7 +8,11 @@ USING_NS_CC;
 class Assignment1 : public Scene
 {
 public:
-    static Scene* createScene();
+   ///* static Scene* Assignment1::createScene()
+   // {
+   //     return Assignment1::create();
+   // }*/
+   static Scene* createScene();
 
     virtual bool init();
 

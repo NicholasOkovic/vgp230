@@ -8,6 +8,10 @@ USING_NS_CC;
 class CollisionTestScene : public Scene
 {
 public:
+    /*static Scene* CollisionTestScene::createScene()
+    {
+        return CollisionTestScene::create();
+    }*/
   static Scene* createScene();
 
   virtual bool init();

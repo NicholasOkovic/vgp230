@@ -26,7 +26,14 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
+#include "HelloWorldScene.h"
+#include "Assignment1.h"
+#include "Assignment2.h"
+#include "CollisionTestScene.h"
+#include "MazeScene.h"
 
+
+using namespace std;
 /**
 @brief    The cocos2d Application.
 
@@ -39,6 +46,18 @@ public:
     virtual ~AppDelegate();
 
     virtual void initGLContextAttrs();
+
+
+    void SwitchToNextLevel();
+
+    void SwitchToPreviousLevel();
+
+    void SwitchToLevel(int level);
+
+
+
+
+
 
     /**
     @brief    Implement Director and Scene init code here.
@@ -58,6 +77,20 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+private:
+    void InitializeLevelSwitching();
+
+    int currentScene = 0;   //make it -1 if you want to have a menu sceen, and dont add it to vector
+
+    vector<cocos2d::Scene* (*)()> scenes
+    {
+        Assignment1::createScene,
+        Assignment2::createScene,
+        CollisionTestScene::createScene,
+        MazeScene::createScene
+    };
+
 };
 
 #endif // _APP_DELEGATE_H_
