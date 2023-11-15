@@ -31,6 +31,9 @@
 #include "Assignment2.h"
 #include "CollisionTestScene.h"
 #include "MazeScene.h"
+#include "MazeScene2.h"
+#include "Week7_HelloMario.h"
+
 
 
 using namespace std;
@@ -88,7 +91,9 @@ private:
         Assignment1::createScene,
         Assignment2::createScene,
         CollisionTestScene::createScene,
-        MazeScene::createScene
+        MazeScene::createScene,
+        MazeScene2::createScene,
+        HelloMario::createScene
     };
 
 };
