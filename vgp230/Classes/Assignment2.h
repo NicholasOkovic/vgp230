@@ -18,10 +18,6 @@ class Assignment2 : public Scene
 {
 public:
 
-    /*static Scene* Assignment2::createScene() 
-    { 
-        return Assignment2::create();
-    }*/
     static Scene* createScene();
 
     virtual bool init();

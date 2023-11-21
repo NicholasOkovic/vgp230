@@ -1,0 +1,42 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Ratman_Map.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Ratman_Map.tmx": {
+            "scale": 1,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 515,
+                "y": 416
+            }
+        },
+        "desert.tmx": {
+            "scale": 1.744140625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 335.98208286674134,
+                "y": 256
+            }
+        },
+        "tmw_desert_spacing.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "D:/LaSalleProjects/Command Prompt Git/vgp230/vgp230/Resources/tmx",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "Ratman_Map.tmx",
+        "desert.tmx"
+    ],
+    "project": "Test.tiled-project",
+    "recentFiles": [
+        "desert.tmx",
+        "Ratman_Map.tmx"
+    ]
+}

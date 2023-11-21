@@ -7,10 +7,7 @@ USING_NS_CC;
 class MazeScene : public Scene
 {
 public:
-    /*static Scene* MazeScene::createScene()
-    {
-        return MazeScene::create();
-    }*/
+    
   static Scene* createScene();
 
   virtual bool init();

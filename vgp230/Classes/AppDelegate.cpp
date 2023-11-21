@@ -23,11 +23,7 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
-#include "Assignment1.h"
-#include "Assignment2.h"
-#include "CollisionTestScene.h"
-#include "MazeScene.h"
+
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -166,7 +162,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //auto scene = Assignment2::createScene();
     //auto scene = CollisionTestScene::create();
     //auto scene = MazeScene::create();
-
+    //auto scene = Ratman::createScene();
 
 
     // run

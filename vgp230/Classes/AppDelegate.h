@@ -31,8 +31,9 @@
 #include "Assignment2.h"
 #include "CollisionTestScene.h"
 #include "MazeScene.h"
-#include "MazeScene2.h"
+//#include "MazeScene2.h"
 #include "Week7_HelloMario.h"
+#include "Ratman.h"
 
 
 
@@ -92,8 +93,9 @@ private:
         Assignment2::createScene,
         CollisionTestScene::createScene,
         MazeScene::createScene,
-        MazeScene2::createScene,
-        HelloMario::createScene
+       // MazeScene2::createScene,
+        HelloMario::createScene,
+        Ratman::createScene
     };
 
 };
