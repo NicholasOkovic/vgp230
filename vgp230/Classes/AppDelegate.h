@@ -34,6 +34,8 @@
 //#include "MazeScene2.h"
 #include "Week7_HelloMario.h"
 #include "Ratman.h"
+#include "Week7_HelloMarioSolution.h"
+#include "Week8_HelloMario2.h"
 
 
 
@@ -95,7 +97,10 @@ private:
         MazeScene::createScene,
        // MazeScene2::createScene,
         HelloMario::createScene,
-        Ratman::createScene
+        Ratman::createScene,
+        HelloMarioSolution::createScene,
+        HelloMario2::createScene
+
     };
 
 };

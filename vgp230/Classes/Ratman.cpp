@@ -22,6 +22,7 @@ bool Ratman::init()
 
 	ratUp = Sprite::create("mouse-0.png");     
 	ratUp->setVisible(false);
+
 	ratRight = Sprite::create("mouse-3.png"); 
 	//no need to set true
 	ratDown = Sprite::create("mouse-6.png");   
@@ -287,6 +288,8 @@ int Ratman::dfs(std::pair<int, int> current, std::pair<int, int>const& target, i
 		dfsPath.push_back(current);			
 		return depth;
 	}
+
+
 
 	for (int x = -1; x <= 1; x++)
 	{
