@@ -36,7 +36,7 @@
 #include "Ratman.h"
 #include "Week7_HelloMarioSolution.h"
 #include "Week8_HelloMario2.h"
-
+#include "Final.h"
 
 
 using namespace std;
@@ -91,6 +91,7 @@ private:
 
     vector<cocos2d::Scene* (*)()> scenes
     {
+        Final::createScene,
         Assignment1::createScene,
         Assignment2::createScene,
         CollisionTestScene::createScene,

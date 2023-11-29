@@ -158,11 +158,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     InitializeLevelSwitching();
 
-    auto scene = Assignment1::createScene();
+    //auto scene = Assignment1::createScene();
     //auto scene = Assignment2::createScene();
     //auto scene = CollisionTestScene::create();
     //auto scene = MazeScene::create();
     //auto scene = Ratman::createScene();
+    auto scene = Final::createScene();
 
 
     // run
