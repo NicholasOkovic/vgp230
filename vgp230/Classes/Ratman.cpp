@@ -238,7 +238,7 @@ void Ratman::update(float dt)
 		}
 		EnemyTimer--;
 
-		//debug && dfs
+		//debug && dfs																			////////////////
 		reset(dfsVisited, dfsPath, false);
 		if (int l = dfs(playerPosition, enemyPosition, 0); l != -1)
 		{
@@ -288,8 +288,6 @@ int Ratman::dfs(std::pair<int, int> current, std::pair<int, int>const& target, i
 		dfsPath.push_back(current);			
 		return depth;
 	}
-
-
 
 	for (int x = -1; x <= 1; x++)
 	{
