@@ -31,6 +31,10 @@ public:
 	{
 		_vel += v;
 	}
+	Vec2 GetVelocity()
+	{
+		return _vel;
+	}
 private:
 	Vec2 _vel;
 	float _maxSpeed;
