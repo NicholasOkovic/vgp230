@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 #include "KeyboardControllerComponent.h"
 #include "CollisionComponent.h"
-
+#include "VelocityComponent.h"
 
 //try to only do basic things that would be used in all levels here
 
@@ -96,16 +96,12 @@ public:
 
 
 
-	//void changeActiveSprite(Sprite* newActive);
-	//void StartInit();
-	//void MovementAndHud(float dt);
-	//void CollisionAndDebug();
-
-	
+	Sprite* LevelOneCol;		//use for best time in trophy
+	Sprite* LevelTwoCol;
 	bool LevelTwoLock = true;
-	Sprite* TrophiesCol;	//
 	
-	int MovingObjectBounce = 40;
+	
+	int MovingObjectBounce = -100;
 
 
 	Sprite* OOBTop;
@@ -127,10 +123,21 @@ public:
 
 
 
+	Sprite* BackgroundStarsS_01;
+	Sprite* BackgroundStarsS_02;
+	Sprite* BackgroundStarsS_03;
 
-
+	Sprite* BackgroundStarsL_01;
+	Sprite* BackgroundStarsL_02;
+	Sprite* BackgroundStarsL_03;
+	
 
 	void SwitchToLevelOne();
+	void SwitchToLevelTwo();
+	void SwitchToTrophy();
+
+
+
 
 	void FirstPlayOff()
 	{
@@ -139,6 +146,49 @@ public:
 
 	void StartInit(Scene* scene)
 	{
+		BackgroundStarsS_01 = Sprite::create("AddedImages/Stars_01.png");
+		scene->addChild(BackgroundStarsS_01, 0);
+		BackgroundStarsS_01->setPosition(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height / 2);
+		BackgroundStarsS_01->setScale(2);
+		BackgroundStarsS_01->addComponent(VelocityComponent::create(Vec2(0, -2), 2));
+		BackgroundStarsS_01->setOpacity(150);
+
+		BackgroundStarsS_02 = Sprite::create("AddedImages/Stars_01.png");
+		scene->addChild(BackgroundStarsS_02, 0);
+		BackgroundStarsS_02->setPosition(BackgroundStarsS_01->getPositionX(), BackgroundStarsS_01->getPositionY() + BackgroundStarsS_01->getContentSize().height);
+		BackgroundStarsS_02->setScale(2);
+		BackgroundStarsS_02->addComponent(VelocityComponent::create(Vec2(0, -2), 2));
+		BackgroundStarsS_02->setOpacity(150);
+
+		BackgroundStarsS_03 = Sprite::create("AddedImages/Stars_01.png");
+		scene->addChild(BackgroundStarsS_03, 0);
+		BackgroundStarsS_03->setPosition(BackgroundStarsS_02->getPositionX(), BackgroundStarsS_02->getPositionY() + BackgroundStarsS_02->getContentSize().height);
+		BackgroundStarsS_03->setScale(2);
+		BackgroundStarsS_03->addComponent(VelocityComponent::create(Vec2(0, -2), 2));
+		BackgroundStarsS_03->setOpacity(150);
+
+		BackgroundStarsL_01 = Sprite::create("AddedImages/Stars_02.png");
+		scene->addChild(BackgroundStarsL_01, -1);
+		BackgroundStarsL_01->setPosition(Director::getInstance()->getVisibleSize().width * 1.5, Director::getInstance()->getVisibleSize().height/3 );
+		BackgroundStarsL_01->setScale(1.25);
+		BackgroundStarsL_01->addComponent(VelocityComponent::create(Vec2(0, -10), 10));
+	
+
+		BackgroundStarsL_02 = Sprite::create("AddedImages/Stars_02.png");
+		scene->addChild(BackgroundStarsL_02, -1);
+		
+		BackgroundStarsL_02->setPosition(BackgroundStarsL_01->getPositionX(), BackgroundStarsL_01->getPositionY() + BackgroundStarsL_01->getContentSize().height);
+		BackgroundStarsL_02->setScale(1.25);
+		BackgroundStarsL_02->addComponent(VelocityComponent::create(Vec2(0, -10), 10));
+
+
+		BackgroundStarsL_03 = Sprite::create("AddedImages/Stars_02.png");
+		scene->addChild(BackgroundStarsL_03, -1);
+		BackgroundStarsL_03->setPosition(BackgroundStarsL_02->getPositionX(), BackgroundStarsL_02->getPositionY() + BackgroundStarsL_02->getContentSize().height);
+		BackgroundStarsL_03->setScale(1.25);
+		BackgroundStarsL_03->addComponent(VelocityComponent::create(Vec2(0, -10), 10));
+		BackgroundStarsL_03->setRotation(180);
+
 		Ship1Up = Sprite::create("carrier_01.png");
 		//Ship1Up->setVisible(false);
 		scene->addChild(Ship1Up, 5);
@@ -550,8 +600,79 @@ public:
 		{
 			SpaceShipSprite->setOpacity(500);
 		}
+
+
+		//paralax
+		
+		if (BackgroundStarsL_01->getPosition().y + BackgroundStarsL_01->getContentSize().height* BackgroundStarsL_01->getScaleY() < SpaceShip->getPosition().y)
+		{
+			BackgroundStarsL_01->setPositionY(BackgroundStarsL_03->getPositionY() + BackgroundStarsL_03->getContentSize().height * BackgroundStarsL_03->getScaleY());
+		}
+		if (BackgroundStarsL_02->getPosition().y + BackgroundStarsL_02->getContentSize().height * BackgroundStarsL_02->getScaleY() < SpaceShip->getPosition().y)
+		{
+			BackgroundStarsL_02->setPositionY(BackgroundStarsL_01->getPositionY() + BackgroundStarsL_01->getContentSize().height * BackgroundStarsL_01->getScaleY());
+		}
+		if (BackgroundStarsL_03->getPosition().y + BackgroundStarsL_03->getContentSize().height * BackgroundStarsL_03->getScaleY() < SpaceShip->getPosition().y)
+		{
+			BackgroundStarsL_03->setPositionY(BackgroundStarsL_02->getPositionY() + BackgroundStarsL_02->getContentSize().height * BackgroundStarsL_02->getScaleY());
+		}
+		if (BackgroundStarsS_01->getPosition().y + BackgroundStarsS_01->getContentSize().height * BackgroundStarsS_01->getScaleY() < SpaceShip->getPosition().y)
+		{
+			BackgroundStarsS_01->setPositionY(BackgroundStarsS_03->getPositionY() + BackgroundStarsS_03->getContentSize().height * BackgroundStarsS_03->getScaleY());
+		}
+		if (BackgroundStarsS_02->getPosition().y + BackgroundStarsS_02->getContentSize().height * BackgroundStarsS_02->getScaleY() < SpaceShip->getPosition().y)
+		{
+			BackgroundStarsS_02->setPositionY(BackgroundStarsS_01->getPositionY() + BackgroundStarsS_01->getContentSize().height * BackgroundStarsS_01->getScaleY());
+		}
+		if (BackgroundStarsS_03->getPosition().y + BackgroundStarsS_03->getContentSize().height * BackgroundStarsS_03->getScaleY() < SpaceShip->getPosition().y)
+		{
+			BackgroundStarsS_03->setPositionY(BackgroundStarsS_02->getPositionY() + BackgroundStarsS_02->getContentSize().height * BackgroundStarsS_02->getScaleY());
+		}
+		
 	}
 
+   
+	//auto GetChildren(Scene* scene)
+	//{
+	//	auto children = scene->getChildren();
+
+	//	Vector<Node*> testChildren;
+
+	//	for (auto it : children)
+	//	{
+	//		auto map = dynamic_cast<TMXTiledMap*>(it);
+
+	//		if (map != NULL)
+	//		{
+	//			int i = 0;
+	//			++i;
+
+	//			for (auto it2 : map->getChildren())
+	//			{
+	//				auto layer = static_cast<TMXLayer*>(it2);
+
+	//				for (auto tile : layer->getChildren())
+	//				{
+	//					auto sprite = (Sprite*)tile;
+
+	//					auto collision = dynamic_cast<CollisionComponent*>(sprite->getComponent("CollisionComponent"));
+	//					if (collision != nullptr)
+	//					{
+	//						int i = 0;
+	//						++i;
+	//					}
+
+	//					testChildren.pushBack(tile);
+	//				}
+	//			}
+	//		}
+	//	}
+	//	for (auto it2 : testChildren)
+	//	{
+	//		children.pushBack(it2);
+	//	}
+	//	return testChildren;
+	//}
 
 	void CollisionAndDebug(Scene* scene)
 	{
@@ -564,11 +685,9 @@ public:
 			debugDrawEnabled = false;
 		}
 
+		auto& children = scene->getChildren();
 
-
-		//collision component
-
-		for (auto it : scene->getChildren())
+		for (auto it : children)
 		{
 			if (auto collision = dynamic_cast<CollisionComponent*>(it->getComponent("CollisionComponent")))
 			{
@@ -576,59 +695,83 @@ public:
 			}
 		}
 
-		auto& children = scene->getChildren();
-
 		for (auto it = children.begin(); it != children.end(); it++)
 		{
 			auto collision = dynamic_cast<CollisionComponent*>((*it)->getComponent("CollisionComponent"));
-			if (collision != nullptr)
-			{
 				for (auto it2 = it + 1; it2 != children.end(); it2++)
 				{
 					auto other = dynamic_cast<CollisionComponent*>((*it2)->getComponent("CollisionComponent"));
-					if (other != nullptr)
+					if (other != nullptr && collision != nullptr)
 					{
-						if (collision->IsColliding(other))
+						if (other->getOwner()->getName() == "Player")
 						{
-
-							if (collision->getOwner()->getName() == "LevelOne")			
+							if (collision->IsColliding(other))
 							{
-								SwitchToLevelOne();															//////////////////////////////
-							}
-							else if (collision->getOwner()->getName() == "Leave")
-							{
-								Director::getInstance()->end();
-							}
-							else if (other->getOwner()->getName() == "Player")
-							{
-								Vec2 collisionNormal = SpaceShip->getPosition() - collision->getOwner()->getBoundingBox().size;
-								
 
-								ShipVelocity.x *= (collisionNormal.x >= 0) ? -1.0f : 1.0f;
-								ShipVelocity.y *= (collisionNormal.y >= 0) ? -1.0f : 1.0f;
-
-								if (collision->getOwner()->getName() == "Obstacle")
+								if (collision->getOwner()->getName() == "LevelOne")
 								{
-									ShipVelocity.y -= MovingObjectBounce;
+									SwitchToLevelOne();															
 								}
-
-								if (sceneState == levelSelect || sceneState == trophy)
+								else if (collision->getOwner()->getName() == "LevelTwo" && LevelTwoLock == false)
 								{
-									continue;
+									SwitchToLevelTwo();															
 								}
-								//take damage when bouncing
-								if (InvincibilityFrames <= 0)
+								else if (collision->getOwner()->getName() == "Trophy")
 								{
-									PlayerHP -= 20;
+									SwitchToTrophy();															
+								}
+								else if (collision->getOwner()->getName() == "Leave")
+								{
+									Director::getInstance()->end();
+								}
+								else 
+								{
+									Vec2 collisionNormal = SpaceShip->getPosition() - collision->getOwner()->getBoundingBox().size;
+									//Vec2 collisionNormal = Vec2(SpaceShip->getPosition().getAngle() + collision->getOwner()->getPosition().getAngle(), SpaceShip->getPosition().getAngle() + collision->getOwner()->getPosition().getAngle());
+
+									Vec2 Velocity = ShipVelocity;
+
+									ShipVelocity.x *= (collisionNormal.x >= 0) ? -1.0f : 1.0f;
+									ShipVelocity.y *= (collisionNormal.y >= 0) ? -1.0f : 1.0f;
+
+									if (collision->getOwner()->getName() == "Obstacle")
+									{
+										if (ShipVelocity.x == Velocity.x * -1 && ShipVelocity.y == Velocity.y * -1)
+										{
+											ShipVelocity.y *= -1;
+										}
+
+
+										//if (ShipVelocity.y < 10 && ShipVelocity.y > -10)
+										//{
+										//	//ShipVelocity.x *= -1;
+										//}
+										if (Velocity.y/* + 10*/ > 0)
+										ShipVelocity.y = MovingObjectBounce;
+										if (Velocity.y/* - 10*/ <= 0)
+											ShipVelocity.y = -MovingObjectBounce;
+									}
+									/*ShipVelocity.x *= (collisionNormal.x >= 0) ? -1.0f : 1.0f;
+									ShipVelocity.y *= (collisionNormal.y >= 0) ? -1.0f : 1.0f;*/
+
 									
-									InvincibilityFrames = InvinciblilityLength;
+									if (sceneState == levelSelect || sceneState == trophy)
+									{
+										continue;
+									}
+									//take damage when bouncing
+									if (InvincibilityFrames <= 0)
+									{
+										PlayerHP -= 20;
+
+										InvincibilityFrames = InvinciblilityLength;
+									}
 								}
+								collision->SetColliding(true);
+								other->SetColliding(true);
 							}
-							collision->SetColliding(true);
-							other->SetColliding(true);
 						}
 					}
-				}
 			}
 		}
 
@@ -640,7 +783,7 @@ public:
 		if (debugDrawEnabled)
 		{
 
-			for (auto it : scene->getChildren())
+			for (auto it : children)
 			{
 				auto collision = dynamic_cast<CollisionComponent*>(it->getComponent("CollisionComponent"));
 

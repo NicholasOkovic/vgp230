@@ -1,5 +1,7 @@
 #include "Final.h"
 #include "LevelOneFinal.h"
+#include "Trophy.h"
+#include "LevelTwoFinal.h"
 
 Scene* Final::createScene()
 {
@@ -13,23 +15,29 @@ Scene* Final::createScene()
 /// what needs to get done \\\
 /// 
 ///
-/// get camera to folloow player but not horiz
+///
 /// mkae sure player cant escape play area
 
 /// add a menu
 /// add level 1
 /// add lvl 2
-/// Make background stars
+///
 /// create healthbar
 
 
 bool Final::init()
 {
+
+	Vec2 LevelOneOffset = Vec2(Director::getInstance()->getVisibleSize().width / 4, Director::getInstance()->getVisibleSize().height / 1.2);
+	Vec2 LevelTwoOffset = Vec2(Director::getInstance()->getVisibleSize().width / 1.4, Director::getInstance()->getVisibleSize().height / 1.2);
+	Vec2 ExitOffset = Vec2(Director::getInstance()->getVisibleSize().width / 4, Director::getInstance()->getVisibleSize().height / 3);
+	Vec2 TrophyOffset = Vec2(Director::getInstance()->getVisibleSize().width / 1.4, Director::getInstance()->getVisibleSize().height / 3);
+
 	StartInit(this);
 
 	OOBTop = Sprite::create("blue.jpg");
 	this->addChild(OOBTop);
-	OOBTop->setPosition(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height);
+	OOBTop->setPosition(Director::getInstance()->getVisibleSize().width / 2, Director::getInstance()->getVisibleSize().height + OOBTop->getContentSize().height *2 );
 	OOBTop->setScaleX(OOBScale);
 	OOBTop->addComponent(CollisionComponent::createBox((OOBTop->getContentSize().width * OOBScale), OOBTop->getContentSize().height));
 	OOBTop->setOpacity(25);
@@ -38,19 +46,19 @@ bool Final::init()
 	this->addChild(OOBBottom);
 	OOBBottom->setPosition(Director::getInstance()->getVisibleSize().width / 2, 0);
 	OOBBottom->setScaleX(OOBScale);
-	OOBBottom->addComponent(CollisionComponent::createBox((OOBTop->getContentSize().width * OOBScale), OOBTop->getContentSize().height));
+	OOBBottom->addComponent(CollisionComponent::createBox((OOBBottom->getContentSize().width * OOBScale), OOBBottom->getContentSize().height));
 	OOBBottom->setOpacity(25);
 
 	OOBLeft = Sprite::create("blue.jpg");
 	this->addChild(OOBLeft);
-	OOBLeft->setPosition(0, Director::getInstance()->getVisibleSize().height / 2);
+	OOBLeft->setPosition(0, Director::getInstance()->getVisibleSize().height / 2 + OOBLeft->getContentSize().width);
 	OOBLeft->setScaleY(SideOOBScale);
 	OOBLeft->addComponent(CollisionComponent::createBox((OOBTop->getContentSize().width), OOBTop->getContentSize().height * SideOOBScale));
 	OOBLeft->setOpacity(25);
 
 	OOBRight = Sprite::create("blue.jpg");
 	this->addChild(OOBRight);
-	OOBRight->setPosition(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height / 2);
+	OOBRight->setPosition(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height / 2 + OOBRight->getContentSize().width);
 	OOBRight->setScaleY(SideOOBScale);
 	OOBRight->addComponent(CollisionComponent::createBox((OOBTop->getContentSize().width), OOBTop->getContentSize().height* SideOOBScale));
 	OOBRight->setOpacity(25);
@@ -71,33 +79,42 @@ bool Final::init()
 	}
 	
 
-	Sprite* LevelOneCol;
-	Sprite* LevelTwoCol;
+	
 	Sprite* TrophiesCol;
 	Sprite* LeaveCol;
 
 	LevelOneCol = Sprite::create("cheese.png");
 	this->addChild(LevelOneCol, 1);
 	LevelOneCol->addComponent(CollisionComponent::createCircle((LevelOneCol->getContentSize().height) / 2));
-	LevelOneCol->setPosition(200, 600);
+	LevelOneCol->setPosition(LevelOneOffset);
 	LevelOneCol->setName("LevelOne");
 
 	LevelTwoCol = Sprite::create("carrot.png");
 	this->addChild(LevelTwoCol);
 	LevelTwoCol->addComponent(CollisionComponent::createBox(LevelTwoCol->getContentSize().width, LevelTwoCol->getContentSize().height));
-	LevelTwoCol->setPosition(800, 600);
+	LevelTwoCol->setPosition(LevelTwoOffset);
 	LevelTwoCol->setName("LevelTwo");
+	
+
+	if (LevelTwoLock)
+	{
+		Sprite* LevelLock = Sprite::create("AddedImages/Lock.png");
+		this->addChild(LevelLock, 5);
+		LevelLock->setScale(0.02);
+		LevelLock->setPosition(LevelTwoCol->getPosition());
+		LevelLock->setOpacity(150);
+	}
 
 	TrophiesCol = Sprite::create("carrot.png");
 	this->addChild(TrophiesCol);
 	TrophiesCol->addComponent(CollisionComponent::createBox(TrophiesCol->getContentSize().width, TrophiesCol->getContentSize().height));
-	TrophiesCol->setPosition(800, 200);
+	TrophiesCol->setPosition(TrophyOffset);
 	TrophiesCol->setName("Trophy");
 
 	LeaveCol = Sprite::create("cheese.png");
 	this->addChild(LeaveCol, 1);
 	LeaveCol->addComponent(CollisionComponent::createCircle((LevelOneCol->getContentSize().height) / 2));
-	LeaveCol->setPosition(200, 200);
+	LeaveCol->setPosition(ExitOffset);
 	LeaveCol->setName("Leave");
 
 	Vec2 TitleOffset = Vec2(0, 50);
@@ -149,4 +166,14 @@ void Final::update(float dt)
 	void Final::SwitchToLevelOne()
 	{
 		Director::getInstance()->replaceScene(LevelOneFinal::createScene());
+	}
+
+	void Final::SwitchToLevelTwo()
+	{
+		//Director::getInstance()->replaceScene(LevelTwoFinal::createScene());
+	}
+
+	void Final::SwitchToTrophy()
+	{
+		Director::getInstance()->replaceScene(Trophy::createScene());
 	}

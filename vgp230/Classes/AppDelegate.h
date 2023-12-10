@@ -37,6 +37,8 @@
 #include "Week7_HelloMarioSolution.h"
 #include "Week8_HelloMario2.h"
 #include "Final.h"
+#include "LevelOneFinal.h"
+#include "Trophy.h"
 
 
 using namespace std;

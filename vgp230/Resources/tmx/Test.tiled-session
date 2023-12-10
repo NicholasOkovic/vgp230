@@ -12,16 +12,16 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 515,
-                "y": 416
+                "x": 514,
+                "y": 415
             }
         },
         "desert.tmx": {
             "scale": 1.744140625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 335.98208286674134,
-                "y": 256
+                "x": 608.3225083986563,
+                "y": 357.7693169092945
             }
         },
         "tmw_desert_spacing.tsx": {
