@@ -44,6 +44,8 @@ public:
 
 	Vec2 PlayerPosition;
 
+	int MovingObjectBounce = -100;
+
 	//offsets
 	Vec2 CooldownOffset = Vec2(-250, -350);
 	
@@ -94,14 +96,36 @@ public:
 	Sprite* Ship31 = NULL;
 	Sprite* Ship32 = NULL;
 
+	Vec2 TitleOffset = Vec2(0, 50);
 
-
-	Sprite* LevelOneCol;		//use for best time in trophy
+	Sprite* LevelOneCol;		
 	Sprite* LevelTwoCol;
+	Sprite* LevelSelectCol;
+
+	Label* LevelSelectTxt;
+
 	bool LevelTwoLock = true;
 	
+	bool HasLevelOneItem_01 = false;
+	bool HasLevelOneItem_02 = true;
+
+	bool HasLevelTwoItem_01 = true;
+	bool HasLevelTwoItem_02 = true;
+
+	void SwitchToLevelOne();
+	void SwitchToLevelTwo();
+	void SwitchToTrophy();
 	
-	int MovingObjectBounce = -100;
+	void SwitchToLevelSelect()
+	{
+		Director::getInstance()->replaceScene(Final::createScene());
+	}
+
+
+	float LevelOneTimeComp = 100;
+	float LevelTwoTimeComp = 100;
+	
+	
 
 
 	Sprite* OOBTop;
@@ -132,12 +156,7 @@ public:
 	Sprite* BackgroundStarsL_03;
 	
 
-	void SwitchToLevelOne();
-	void SwitchToLevelTwo();
-	void SwitchToTrophy();
-
-
-
+	
 
 	void FirstPlayOff()
 	{
@@ -720,9 +739,21 @@ public:
 								{
 									SwitchToTrophy();															
 								}
+								else if (collision->getOwner()->getName() == "LevelSelect")
+								{
+									SwitchToLevelSelect();
+								}
 								else if (collision->getOwner()->getName() == "Leave")
 								{
 									Director::getInstance()->end();
+								}
+								else if (collision->getOwner()->getName() == "Trigger")
+								{
+									collision->getOwner()->setName("Activated");
+								}
+								else if (collision->getOwner()->getName() == "FalseCollision")
+								{ 
+
 								}
 								else 
 								{
@@ -731,7 +762,7 @@ public:
 
 									Vec2 Velocity = ShipVelocity;
 
-									ShipVelocity.x *= (collisionNormal.x >= 0) ? -1.0f : 1.0f;
+									ShipVelocity.x *= (collisionNormal.x >= 0) ? -1.0f : 1.0f;			//redo all of this, to previous iteration with checks
 									ShipVelocity.y *= (collisionNormal.y >= 0) ? -1.0f : 1.0f;
 
 									if (collision->getOwner()->getName() == "Obstacle")

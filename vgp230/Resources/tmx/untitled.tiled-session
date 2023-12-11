@@ -3,18 +3,35 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "Space_Map.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "Space_Map.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 633,
+                "y": 1495.5
+            }
+        },
+        "asteroids_08.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
     },
     "last.imagePath": "D:/LaSalleProjects/Command Prompt Git/vgp230/vgp230/Resources/AddedImages",
     "map.height": 50,
     "map.lastUsedFormat": "tmx",
     "openFiles": [
+        "Space_Map.tmx",
+        "asteroids_08.tsx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "asteroids_08.tsx",
+        "Space_Map.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

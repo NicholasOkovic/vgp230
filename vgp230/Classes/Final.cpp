@@ -13,16 +13,19 @@ Scene* Final::createScene()
 
 
 /// what needs to get done \\\
+///
+/// Fix Bounce
 /// 
-///
-///
-/// mkae sure player cant escape play area
-
-/// add a menu
 /// add level 1
 /// add lvl 2
-///
+/// 
+/// 
 /// create healthbar
+/// 
+/// add fancy UI
+/// 
+/// add sound effects & background track
+/// add obstacles that push the player
 
 
 bool Final::init()
@@ -117,7 +120,7 @@ bool Final::init()
 	LeaveCol->setPosition(ExitOffset);
 	LeaveCol->setName("Leave");
 
-	Vec2 TitleOffset = Vec2(0, 50);
+	
 	
 	Label* LevelOneTxt = Label::create();
 	LevelOneTxt->setPosition(LevelOneCol->getPosition() + TitleOffset);
@@ -165,6 +168,10 @@ void Final::update(float dt)
 
 	void Final::SwitchToLevelOne()
 	{
+		if (debugDrawEnabled)
+		{
+			FirstPlay = false;
+		}
 		Director::getInstance()->replaceScene(LevelOneFinal::createScene());
 	}
 

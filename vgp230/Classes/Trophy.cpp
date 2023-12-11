@@ -9,7 +9,20 @@ Scene* Trophy::createScene()
 
 bool Trophy::init()
 {
+	sceneState = trophy;
+
 	StartInit(this);
+
+	particleSystem_01 = ParticleSystemQuad::create("Particle/Unlock.plist");
+	addChild(particleSystem_01, 6);
+	particleSystem_01->setScale(0.25);
+
+	particleSystem_02 = ParticleSystemQuad::create("Particle/Unlock.plist");
+	addChild(particleSystem_02, 6);
+	particleSystem_02->setScale(0.25);
+
+	particleSystem_01->setPosition(-1000, -1000);
+	particleSystem_02->setPosition(-1000, -1000);
 
 	OOBTop = Sprite::create("blue.jpg");
 	this->addChild(OOBTop);
@@ -39,6 +52,106 @@ bool Trophy::init()
 	OOBRight->addComponent(CollisionComponent::createBox((OOBTop->getContentSize().width), OOBTop->getContentSize().height * SideOOBScale));
 	OOBRight->setOpacity(25);
 
+	SpaceShip->setPosition(SpaceShip->getContentSize().width * 2, Director::getInstance()->getVisibleSize().height / 2);
+
+	LevelOneTimeTxt = Label::create();
+	this->addChild(LevelOneTimeTxt);
+	LevelOneTimeTxt->setPosition(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height / 1.25);
+	LevelOneTimeTxt->setScale(5);
+
+	if (LevelOneTimeComp > 0)
+	{
+		string toString = to_string(/*round(*/LevelOneTimeComp/* * 1000) / 1000*/);								///////////////////////////////// Fix Time UI	
+		LevelOneTimeTxt->setString("Level 1");
+		DisplayTime_01 = Label::create();
+		this->addChild(DisplayTime_01);
+		DisplayTime_01->setScale(5);
+		DisplayTime_01->setPosition(LevelOneTimeTxt->getPosition().x, LevelOneTimeTxt->getPosition().y - LevelOneTimeTxt->getRenderingFontSize()* LevelOneTimeTxt->getScale());
+		DisplayTime_01->setString(toString + ":" + "0");
+	}
+	else
+		LevelOneTimeTxt->setString("       Level 1\nNot Completed");
+	
+	LevelTwoTimeTxt = Label::create();
+	this->addChild(LevelTwoTimeTxt);
+	LevelTwoTimeTxt->setPosition(Director::getInstance()->getVisibleSize().width * 1.5, Director::getInstance()->getVisibleSize().height / 1.25);
+	LevelTwoTimeTxt->setScale(5);
+
+	if (LevelTwoTimeComp > 0)
+	{
+		string toString = to_string(/*round(*/LevelTwoTimeComp/* * 1000) / 1000*/);								///////////////////////////////// Fix Time UI	
+		LevelTwoTimeTxt->setString("Level 2");
+		DisplayTime_02 = Label::create();
+		this->addChild(DisplayTime_02);
+		DisplayTime_02->setScale(5);
+		DisplayTime_02->setPosition(LevelTwoTimeTxt->getPosition().x, LevelTwoTimeTxt->getPosition().y - LevelTwoTimeTxt->getRenderingFontSize() * LevelTwoTimeTxt->getScale());
+		DisplayTime_02->setString(toString + ":" + "0");
+	}
+	else
+		LevelTwoTimeTxt->setString("       Level 2\nNot Completed");
+
+
+	LevelOneItem_01 = Sprite::create("blue.jpg");
+	this->addChild(LevelOneItem_01);
+	LevelOneItem_01->setPosition(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height / 2);
+	LevelOneItem_01->addComponent(CollisionComponent::createBox(LevelOneItem_01->getContentSize().width, LevelOneItem_01->getContentSize().height));
+	LevelOneItem_01->setColor(Color3B::Color3B(50, 50, 50));
+
+	LevelOneItemTrig_01 = Sprite::create("blue.jpg");
+	this->addChild(LevelOneItemTrig_01, 1);
+	LevelOneItemTrig_01->setPosition(LevelOneItem_01->getPosition());
+	LevelOneItemTrig_01->addComponent(CollisionComponent::createBox(LevelOneItemTrig_01->getContentSize().width*5, LevelOneItemTrig_01->getContentSize().height*10));
+	LevelOneItemTrig_01->setName("Trigger");
+	LevelOneItemTrig_01->setVisible(false);
+
+	LevelOneItem_02 = Sprite::create("blue.jpg");
+	this->addChild(LevelOneItem_02);
+	LevelOneItem_02->setPosition(Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height / 5);
+	LevelOneItem_02->addComponent(CollisionComponent::createBox(LevelOneItem_02->getContentSize().width, LevelOneItem_02->getContentSize().height));
+	LevelOneItem_02->setColor(Color3B::Color3B(50, 50, 50));
+
+	LevelOneItemTrig_02 = Sprite::create("blue.jpg");
+	this->addChild(LevelOneItemTrig_02, 1);
+	LevelOneItemTrig_02->setPosition(LevelOneItem_02->getPosition());
+	LevelOneItemTrig_02->addComponent(CollisionComponent::createBox(LevelOneItemTrig_02->getContentSize().width * 5, LevelOneItemTrig_02->getContentSize().height * 10));
+	LevelOneItemTrig_02->setName("Trigger");
+	LevelOneItemTrig_02->setVisible(false);
+
+	LevelTwoItem_01 = Sprite::create("blue.jpg");
+	this->addChild(LevelTwoItem_01);
+	LevelTwoItem_01->setPosition(Director::getInstance()->getVisibleSize().width * 1.5, Director::getInstance()->getVisibleSize().height / 2);
+	LevelTwoItem_01->addComponent(CollisionComponent::createBox(LevelTwoItem_01->getContentSize().width, LevelTwoItem_01->getContentSize().height));
+	LevelTwoItem_01->setColor(Color3B::Color3B(50, 50, 50));
+
+	LevelTwoItemTrig_01 = Sprite::create("blue.jpg");
+	this->addChild(LevelTwoItemTrig_01, 1);
+	LevelTwoItemTrig_01->setPosition(LevelTwoItem_01->getPosition());
+	LevelTwoItemTrig_01->addComponent(CollisionComponent::createBox(LevelTwoItemTrig_01->getContentSize().width * 5, LevelTwoItemTrig_01->getContentSize().height * 10));
+	LevelTwoItemTrig_01->setName("Trigger");
+	LevelTwoItemTrig_01->setVisible(false);
+
+	LevelTwoItem_02 = Sprite::create("blue.jpg");
+	this->addChild(LevelTwoItem_02);
+	LevelTwoItem_02->setPosition(Director::getInstance()->getVisibleSize().width * 1.5, Director::getInstance()->getVisibleSize().height / 5);
+	LevelTwoItem_02->addComponent(CollisionComponent::createBox(LevelTwoItem_02->getContentSize().width, LevelTwoItem_02->getContentSize().height));
+	LevelTwoItem_02->setColor(Color3B::Color3B(50, 50, 50));
+	
+	LevelTwoItemTrig_02 = Sprite::create("blue.jpg");
+	this->addChild(LevelTwoItemTrig_02, 1);
+	LevelTwoItemTrig_02->setPosition(LevelTwoItem_02->getPosition());
+	LevelTwoItemTrig_02->addComponent(CollisionComponent::createBox(LevelTwoItemTrig_02->getContentSize().width * 5, LevelTwoItemTrig_02->getContentSize().height * 10));
+	LevelTwoItemTrig_02->setName("Trigger");
+	LevelTwoItemTrig_02->setVisible(false);
+
+	LevelSelectCol = Sprite::create("blue.jpg");
+	this->addChild(LevelSelectCol, 1);
+	LevelSelectCol->addComponent(CollisionComponent::createBox(LevelSelectCol->getContentSize().width, LevelSelectCol->getContentSize().height));
+	LevelSelectCol->setPosition(Director::getInstance()->getVisibleSize().width / 5, Director::getInstance()->getVisibleSize().height / 5);
+
+	LevelSelectTxt = Label::create();
+	this->addChild(LevelSelectTxt, 1);
+	LevelSelectTxt->setPosition(LevelSelectCol->getPosition() - TitleOffset);
+
 
 	keyboard->initInput();
 	scheduleUpdate();
@@ -53,6 +166,53 @@ void Trophy::update(float dt)
 
 	CollisionAndDebug(this);
 
+	//particle activation check
+	
+	if (LevelOneItemTrig_01->getName() == "Activated" && HasLevelOneItem_01)
+	{
+		particleSystem_01->setPosition(LevelOneItem_01->getPosition());
+		particleSystem_01->start();
+		LevelOneItem_01->setColor(Color3B::Color3B(255, 255, 255));
+		LevelOneItemTrig_01->setName("FalseCollision");
+
+	}
+	else if (LevelOneItemTrig_01->getName() == "Activated")
+	{
+		LevelOneItemTrig_01->setName("FalseCollision");
+	}
+	if (LevelOneItemTrig_02->getName() == "Activated" && HasLevelOneItem_02)
+	{
+		particleSystem_02->setPosition(LevelOneItem_02->getPosition());
+		particleSystem_02->start();
+		LevelOneItem_02->setColor(Color3B::Color3B(255, 255, 255));
+		LevelOneItemTrig_02->setName("FalseCollision");
+	}
+	else if (LevelOneItemTrig_02->getName() == "Activated")
+	{
+		LevelOneItemTrig_02->setName("FalseCollision");
+	}
+	if (LevelTwoItemTrig_01->getName() == "Activated" && HasLevelTwoItem_01)
+	{
+		particleSystem_01->setPosition(LevelTwoItem_01->getPosition());
+		particleSystem_01->start();
+		LevelTwoItem_01->setColor(Color3B::Color3B(255, 255, 255));
+		LevelTwoItemTrig_01->setName("FalseCollision");
+	}
+	else if (LevelTwoItemTrig_01->getName() == "Activated")
+	{
+		LevelTwoItemTrig_01->setName("FalseCollision");
+	}
+	if (LevelTwoItemTrig_02->getName() == "Activated" && HasLevelTwoItem_02)
+	{
+		particleSystem_02->setPosition(LevelTwoItem_02->getPosition());
+		particleSystem_02->start();
+		LevelTwoItem_02->setColor(Color3B::Color3B(255, 255, 255));
+		LevelTwoItemTrig_02->setName("FalseCollision");
+	}
+	else if (LevelTwoItemTrig_02->getName() == "Activated")
+	{
+		LevelTwoItemTrig_02->setName("FalseCollision");
+	}
 
 	PlayerPosition = SpaceShip->getPosition();
 	this->_defaultCamera->setPosition(PlayerPosition.x, Director::getInstance()->getVisibleSize().height /2);
