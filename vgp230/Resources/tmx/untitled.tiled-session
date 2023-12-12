@@ -7,16 +7,66 @@
     "expandedProjectPaths": [
         "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Meteor_01.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Space_Map.tmx": {
-            "scale": 1,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 633,
-                "y": 1495.5
+                "x": 699.3333333333333,
+                "y": 548
             }
         },
+        "Space_Map.tmx#AsteroidTileSet": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#Meteor_02": {
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#Meteor_03": {
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#asteroids_02": {
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#asteroids_03": {
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#asteroids_04": {
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#asteroids_05": {
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#asteroids_06": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Space_Map.tmx#asteroids_08": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Space_Map.tmx#test": {
+            "dynamicWrapping": true,
+            "scaleInEditor": 1
+        },
+        "asteroids_01.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "asteroids_08.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
         }
@@ -25,13 +75,23 @@
     "map.height": 50,
     "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "Space_Map.tmx",
-        "asteroids_08.tsx"
-    ],
-    "project": "untitled.tiled-project",
-    "recentFiles": [
-        "asteroids_08.tsx",
         "Space_Map.tmx"
     ],
-    "tileset.lastUsedFormat": "tsx"
+    "project": "untitled.tiled-project",
+    "property.type": "int",
+    "recentFiles": [
+        "Space_Map.tmx",
+        "Meteor_01.tsx",
+        "asteroids_01.tsx",
+        "asteroids_08.tsx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.margin": 0,
+    "tileset.spacing": 0,
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    },
+    "tileset.type": 0
 }

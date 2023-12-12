@@ -22,10 +22,16 @@ Scene* Final::createScene()
 /// 
 /// create healthbar
 /// 
-/// add fancy UI
+/// add fancy UI, add dash hud
 /// 
 /// add sound effects & background track
 /// add obstacles that push the player
+/// 
+/// make an in-depth tutorial
+/// 
+/// 
+/// 
+/// 
 
 
 bool Final::init()
@@ -66,7 +72,7 @@ bool Final::init()
 	OOBRight->addComponent(CollisionComponent::createBox((OOBTop->getContentSize().width), OOBTop->getContentSize().height* SideOOBScale));
 	OOBRight->setOpacity(25);
 	
-	if (FirstPlay == true)
+	if (SpaceShip::getInstance()->FirstPlay == true)
 	{
 		Sprite* WASD = Sprite::create("WASDkeys.png");
 		this->addChild(WASD, 1);
@@ -99,7 +105,7 @@ bool Final::init()
 	LevelTwoCol->setName("LevelTwo");
 	
 
-	if (LevelTwoLock)
+	if (SpaceShip::getInstance()->LevelTwoLock)
 	{
 		Sprite* LevelLock = Sprite::create("AddedImages/Lock.png");
 		this->addChild(LevelLock, 5);
@@ -156,7 +162,7 @@ bool Final::init()
 
 void Final::update(float dt)
 {
-	MovementAndHud(dt);
+	MovementAndHud(dt, this);
 
 	CollisionAndDebug(this);
 
@@ -168,16 +174,12 @@ void Final::update(float dt)
 
 	void Final::SwitchToLevelOne()
 	{
-		if (debugDrawEnabled)
-		{
-			FirstPlay = false;
-		}
 		Director::getInstance()->replaceScene(LevelOneFinal::createScene());
 	}
 
 	void Final::SwitchToLevelTwo()
 	{
-		//Director::getInstance()->replaceScene(LevelTwoFinal::createScene());
+		Director::getInstance()->replaceScene(LevelTwoFinal::createScene());
 	}
 
 	void Final::SwitchToTrophy()
