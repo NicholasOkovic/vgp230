@@ -135,7 +135,7 @@ bool Trophy::init()
 	this->addChild(LevelTwoItem_01);
 	LevelTwoItem_01->setPosition(Director::getInstance()->getVisibleSize().width * 1.5, Director::getInstance()->getVisibleSize().height / 2);
 	LevelTwoItem_01->setScale(0.05);
-	LevelTwoItem_01->addComponent(CollisionComponent::createBox(LevelTwoItem_01->getContentSize().width * LevelTwoItem_01->getScaleX()/2, LevelTwoItem_01->getContentSize().height * LevelTwoItem_01->getScaleY()/2));
+	LevelTwoItem_01->addComponent(CollisionComponent::createBox(LevelTwoItem_01->getContentSize().width * LevelTwoItem_01->getScaleX(), LevelTwoItem_01->getContentSize().height * LevelTwoItem_01->getScaleY()));
 	LevelTwoItem_01->setColor(Color3B::Color3B(50, 50, 50));
 	
 

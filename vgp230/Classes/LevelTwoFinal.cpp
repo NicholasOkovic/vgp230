@@ -45,12 +45,37 @@ bool LevelTwoFinal::init()
 	LargeAstroid_01->setPosition(LevelOffset.x + Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height);
 	LargeAstroid_01->setRotation(180);
 
+
+	LargeAstroid_05 = Sprite::create("AddedImages/Meteor_02.png");	
+	this->addChild(LargeAstroid_05);
+	LargeAstroid_05->setScale(0.5);
+	LargeAstroid_05->addComponent(CollisionComponent::createBox(LargeAstroid_05->getContentSize().width * LargeAstroid_05->getScaleX(), LargeAstroid_05->getContentSize().height * LargeAstroid_05->getScaleY()));
+	LargeAstroid_05->setPosition(LevelOffset.x + Director::getInstance()->getVisibleSize().width/2, Director::getInstance()->getVisibleSize().height * 1.5);
+	
+
+
 	LargeAstroid_04 = Sprite::create("AddedImages/Meteor_04.png");
 	this->addChild(LargeAstroid_04);
 	LargeAstroid_04->setScale(1);
-	LargeAstroid_04->addComponent(CollisionComponent::createBox(LargeAstroid_04->getContentSize().width * LargeAstroid_04->getScaleX() / 1.2, LargeAstroid_04->getContentSize().height * LargeAstroid_04->getScaleY() / 1.2));
+	LargeAstroid_04->addComponent(CollisionComponent::createBox(LargeAstroid_04->getContentSize().width * (LargeAstroid_04->getScaleX() / 1.2), LargeAstroid_04->getContentSize().height * (LargeAstroid_04->getScaleY() / 1.2)));
 	LargeAstroid_04->setPosition(LevelOffset.x + Director::getInstance()->getVisibleSize().width / 8, Director::getInstance()->getVisibleSize().height / 1.2);
 	LargeAstroid_04->setRotation(140);
+
+
+	LargeAstroid_01 = Sprite::create("AddedImages/Meteor_01.png");
+	this->addChild(LargeAstroid_01);
+	LargeAstroid_01->setScale(2);
+	LargeAstroid_01->addComponent(CollisionComponent::createBox(LargeAstroid_01->getContentSize().width * LargeAstroid_01->getScaleX(), LargeAstroid_01->getContentSize().height * LargeAstroid_01->getScaleY()));
+	LargeAstroid_01->setPosition(LevelOffset.x + Director::getInstance()->getVisibleSize().width, Director::getInstance()->getVisibleSize().height * 2);
+	LargeAstroid_01->setRotation(180);
+
+	LargeAstroid_04 = Sprite::create("AddedImages/Meteor_04.png");
+	this->addChild(LargeAstroid_04);
+	LargeAstroid_04->setScale(1);
+	LargeAstroid_04->addComponent(CollisionComponent::createBox(LargeAstroid_04->getContentSize().width * (LargeAstroid_04->getScaleX() / 1.2), LargeAstroid_04->getContentSize().height * (LargeAstroid_04->getScaleY() / 1.2)));
+	LargeAstroid_04->setPosition(LevelOffset.x + Director::getInstance()->getVisibleSize().width / 8, Director::getInstance()->getVisibleSize().height * 2.5);
+	LargeAstroid_04->setRotation(140);
+
 
 
 	LevelTwoItem_01 = Sprite::create("AddedImages/Golden_Key.png");					

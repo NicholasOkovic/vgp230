@@ -102,8 +102,8 @@ private:
         HelloMario::createScene,
         Ratman::createScene,
         HelloMarioSolution::createScene,
-        HelloMario2::createScene
-
+        HelloMario2::createScene,
+        Final::createScene
     };
 
 };

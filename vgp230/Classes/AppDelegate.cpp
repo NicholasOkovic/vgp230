@@ -163,7 +163,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //auto scene = CollisionTestScene::create();
     //auto scene = MazeScene::create();
     //auto scene = Ratman::createScene();
-    auto scene = LevelTwoFinal::createScene();
+    auto scene = Final::createScene();
 
 
     // run

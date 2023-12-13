@@ -100,7 +100,7 @@ bool Final::init()
 
 	LevelTwoCol = Sprite::create("carrot.png");
 	this->addChild(LevelTwoCol);
-	LevelTwoCol->addComponent(CollisionComponent::createBox(LevelTwoCol->getContentSize().width, LevelTwoCol->getContentSize().height));
+	LevelTwoCol->addComponent(CollisionComponent::createBox(LevelTwoCol->getContentSize().width * LevelTwoCol->getScaleX(), LevelTwoCol->getContentSize().height *LevelTwoCol->getScaleY()));
 	LevelTwoCol->setPosition(LevelTwoOffset);
 	LevelTwoCol->setName("LevelTwo");
 	
