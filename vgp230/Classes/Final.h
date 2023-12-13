@@ -591,9 +591,9 @@ public:
 		else
 		{
 			//timer and string
-			string toString = to_string(round((DashTimer * 1000)) / 1000);							//change to ui later
-			DashTimerTxt->setString("Cooldown " + toString);
-			DashTimerTxt->setPosition(SpaceShip->getPosition() + CooldownOffset);
+			//string toString = to_string(round((DashTimer * 1000)) / 1000);							//change to ui later
+			//DashTimerTxt->setString("Cooldown " + toString);
+			//DashTimerTxt->setPosition(SpaceShip->getPosition() + CooldownOffset);
 
 
 			//limiter

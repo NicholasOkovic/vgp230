@@ -1,5 +1,6 @@
 
 #include "Final.h"
+//#include "LevelOneFinal.h"
 
 class LevelTwoFinal : public Final
 {
@@ -15,6 +16,8 @@ public:
 
 	Sprite* BoundryLeft;
 	Sprite* BoundryRight;
+
+	
 
 
 
